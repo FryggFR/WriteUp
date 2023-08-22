@@ -150,7 +150,7 @@ We found this capabilite who is exploitable to get the root :
 
 `/home/kiba/.hackmeplease/python3 = cap_setuid+ep`
 
-This binarie have **cap_setuid+ep** attribute, wich means this binarie can change his UID. 
+This binarie have **cap_setuid+ep** attribute, wich means this binarie can set his UID. 
 We can use it to generate a shell with UID 0 and getting a shell with root privileges.
 
 On [GTFOBins](https://gtfobins.github.io/) we have the right payload to get the root :
