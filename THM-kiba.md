@@ -1,6 +1,6 @@
 # ROOM : KIBA
 
-Hello, i'm Frygg, today i show you my little contribution to the word of cybersecurity. Here a little write up for the room Kiba on TryHackMe, hope it can help someone ;).
+Hello, i'm Frygg, today i show you my little contribution to the word of cybersecurity. Here a little write up for the room [Kiba](https://tryhackme.com/room/kiba) on TryHackMe, hope it can help someone ;).
 
 In this write up, you can see :
 
