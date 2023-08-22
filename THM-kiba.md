@@ -40,6 +40,8 @@ On the Timelion, i can put the payload :
 `
 Then run the code and load the canvas page.
 
+Or we can use this [PoC](https://github.com/LandGrey/CVE-2019-7609)
+
 Nice, we have the reverse shell.
 
 1st flag obtained !
