@@ -1,4 +1,5 @@
-* NOT THE REAL WRITEUP, I JUST DO SOME TEST*
+* NOT THE FINAL WRITEUP !!! *
+* 
 # ROOM : KIBA
 
 ## 1. Enumeration
@@ -62,5 +63,3 @@ Using GTFOBins we have the right payload to get the root :
 We have the root !
 
 root flag obtained !
-
-(En cours d'écriture..)
