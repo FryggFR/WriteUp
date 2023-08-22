@@ -61,4 +61,6 @@ Using GTFOBins we have the right payload to get the root :
 
 We have the root !
 
+root flag obtained !
+
 (En cours d'écriture..)
