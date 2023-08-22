@@ -11,7 +11,7 @@ I run nmap scan to get open port, version etc.
 
 3 ports is open as you can see in the result :
 
-`
+```
 Starting Nmap 7.94 ( https://nmap.org ) at 2023-08-20 16:19 EDT
 Nmap scan report for 10.10.223.77
 Host is up (0.034s latency).
@@ -94,7 +94,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 29.40 seconds
 
-`
+```
 
 WebServer is empty, just the default apache page. Lets look to the port 5601, who is Kibana.
 
