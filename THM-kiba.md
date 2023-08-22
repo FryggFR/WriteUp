@@ -140,7 +140,7 @@ Nice, we have the reverse shell on the web server !
 ## 3. Privilege escalation !
 
 After quick research of config files or something usefull, i found something interesting in kiba's home.
-One folder is named **.hackmeplease**, in this folder, we have one file, python3 binarie
+One folder is named **.hackmeplease**, in this folder, we have one file, its a python3 binarie.
 
 We have to search capabilites to see if we can exloit it:
 
