@@ -109,7 +109,7 @@ WebServer is empty, just the default apache page. Lets look to the port 5601, wh
 Kibana is a data visualization dashboard for Elasticsearch.
 
 ## 2. Research of exploit !
-After a quick analyze, we found Kibana is in version 6.5.4.
+After a quick analyze on the dashboard, we found Kibana is in version 6.5.4.
 
 After one quick search on google, we found one CVE about Kibana : **CVE-2019-7609**
 This CVE can lead to a RCE (Remote Code Execution).
