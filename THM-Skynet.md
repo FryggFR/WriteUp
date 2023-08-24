@@ -3,12 +3,9 @@
 Hello, this is a write-up for [Skynet](https://tryhackme.com/room/skynet) room.
 I rewrite this soon to be more readable lol !
 
-IP: 10.10.250.118
+Password and flag are hidden.
 
 ## Enumeration
-----
-NMAP
-----
 First, i call my bestfriend, nmap to scan this ip:
 
 ```
