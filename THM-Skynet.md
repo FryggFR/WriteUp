@@ -5,7 +5,7 @@ I rewrite this soon to be more readable lol !
 
 Password and flag are hidden.
 
-I rooted this machine in 3hours. 
+It took me more than 3hours to root this machine. 
 
 ## Enumeration
 First, i call my bestfriend, nmap to scan this ip:
