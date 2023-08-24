@@ -377,8 +377,7 @@ uid=0(root) gid=0(root) groups=0(root)
 ```
 
 We can get the root flag
-
+```
 cat /root/root.txt
-
-3f0372*****************
 3f03***********************
+```
