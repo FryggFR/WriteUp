@@ -9,6 +9,7 @@ In this write up, you can see :
 3. Root the machine !!!
 
 This is my first write up, it may be modified !
+This challenge is fairly easy, so this writeup won't take long.
 
 ## 1. Enumeration
 
