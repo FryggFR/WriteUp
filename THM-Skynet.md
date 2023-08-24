@@ -157,8 +157,7 @@ Finished
 ```
 Here the POP/IMAP server we found previously with nmap, its squirrel mail server.
 
-## Bruteforcing !
-
+## Time to attack !
 We have an id (milesdyson) and a list of passwords (log1.txt). We can try to bruteforce this webmail server.
 
 To do this, i use hashcat:
