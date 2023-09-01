@@ -7,6 +7,6 @@ In this repo, i will show you how i hack a machine and try to explain how it wor
 
 *Not all write up is here.*
 
-Keep in mind i'm not a pro, i'm just a noob who want to learn like you. ;)
+Keep in mind i'm not a pro, i'm just a curious person who want to learn and improve. ;)
 
 *Note : All flag are hidden*
