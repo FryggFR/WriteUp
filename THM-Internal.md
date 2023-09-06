@@ -234,5 +234,5 @@ root@internal:~#
 Et le flag !
 ```
 root@internal:~# cat /root/root.txt
-THM{d0ck3r_d3str0y3r}
+THM{***************}
 ```
