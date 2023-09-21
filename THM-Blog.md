@@ -152,7 +152,7 @@ La page **http://blog.thm/wp-json/wp/v2/users** nous montre quelques information
 [{"id":1,"name":"Billy Joel","url":"","description":"","link":"http:\/\/blog.thm\/author\/bjoel\/","slug":"bjoel","avatar_urls":{"24":"http:\/\/0.gravatar.com\/avatar\/9943fa6dfe2ab4088f676ff75dc1f848?s=24&d=mm&r=g","48":"http:\/\/0.gravatar.com\/avatar\/9943fa6dfe2ab4088f676ff75dc1f848?s=48&d=mm&r=g","96":"http:\/\/0.gravatar.com\/avatar\/9943fa6dfe2ab4088f676ff75dc1f848?s=96&d=mm&r=g"},"meta":[],"_links":{"self":[{"href":"http:\/\/blog.thm\/wp-json\/wp\/v2\/users\/1"}],"collection":[{"href":"http:\/\/blog.thm\/wp-json\/wp\/v2\/users"}]}},{"id":3,"name":"Karen Wheeler","url":"","description":"","link":"http:\/\/blog.thm\/author\/kwheel\/","slug":"kwheel","avatar_urls":{"24":"http:\/\/0.gravatar.com\/avatar\/3e7bf1e5f26496543c964dc04515bb6a?s=24&d=mm&r=g","48":"http:\/\/0.gravatar.com\/avatar\/3e7bf1e5f26496543c964dc04515bb6a?s=48&d=mm&r=g","96":"http:\/\/0.gravatar.com\/avatar\/3e7bf1e5f26496543c964dc04515bb6a?s=96&d=mm&r=g"},"meta":[],"_links":{"self":[{"href":"http:\/\/blog.thm\/wp-json\/wp\/v2\/users\/3"}],"collection":[{"href":"http:\/\/blog.thm\/wp-json\/wp\/v2\/users"}]}}]
 ```
 Ici je trouve 2 comptes: 
-Le compte de Billy Joel avec l'identifiant **bjoel**
+Le compte de Billy Joel avec l'identifiant **bjoel**\n
 Le compte de Karen Wheeler avec l'identifiant **kwheel**
 
 # Brute Force de la page wp-login.php!
