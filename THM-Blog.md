@@ -145,7 +145,7 @@ Un premier scan pour voir un peux, je ne le copie pas ici car il est beaucoup tr
 ```
 wpscan --url http://blog.thm/wp-login.php -v --api-token=MYKEY
 ```
-Il trouve quelques infos, avec l'option **--enumerate u** on retrouve les users, mais je vais vous montrer une autre methode pour obtenir ces infos sans outils !
+Il trouve quelques infos, avec l'option **--enumerate u** on retrouve les users, mais je vais vous montrer une autre methode pour obtenir ces infos sans outil !
 
 La page **http://blog.thm/wp-json/wp/v2/users** nous montre quelques informations utiles !
 ```
@@ -238,9 +238,9 @@ Je vais utiliser hashcat pour essayer de le cracker:
 hashcat -m 400 -a 0 hashbjoel /home/kali/Wordlist/rockyou.txt
 ```
 Hashcat ne parvient pas à crack le mot de passe avec le dico rockyou.txt...
-On retestera un peu plus tard, continions les recherches...
+On retestera un peu plus tard, on continue les recherches...
 
-Dans le home de bjoel on trouve plusieurs fichiers dont user.txt, mais c'est un piège !
+Dans le home de bjoel, on y trouve plusieurs fichiers dont user.txt, mais c'est un piège !
 ```
 You won't find what you're looking for here.
 
@@ -248,9 +248,10 @@ TRY HARDER
 ```
 Il y a aussi un fichier .pdf **Billy_Joel_Termination_May20-2020.pdf**. C'est la lettre de rupture de contrat de notre cher Billy.
 
-J'importe linpeas dans le dossier /tmp et l'execute mais celui-ci ne trouve rien de bien intéressant...
+J'importe linpeas dans le dossier /tmp et l'execute mais celui-ci ne trouve rien de bien intéressant a première vue...
 
-le motif de rupture est qu'il joue pas mal avec les clé USB entres autres, de plus, le nom de l'entreprise est Rubber Ducky Inc, cela donne une bonne piste à suivre.
+le motif de rupture est qu'il joue pas mal avec les clé USB entres autres, de plus, le nom de l'entreprise est *Rubber Ducky Inc, cela donne une bonne piste à suivre.
+*Une Rubber Ducky est une clé USB qui permet d'excecuter du code dés qu'elle est plug sur un PC, elle se fait passer pour un clavier auprès du PC et permet donc beaucoup de chose...*
 
 Je vais donc dans le dossier **/media** , il y a bien une clé USB !
 ```
@@ -295,7 +296,7 @@ Quand je l'execute, il me répond :
 Not an Admin
 ```
 On doit pouvoir faire quelque chose pour l'exploiter .
-Il s'agit d'un binaire ELF (Le .exe de linux)
+Il s'agit d'un binaire ELF (Executable and Linkable Format), c'est le .exe de linux en gros.
 ```
 checker: setuid, setgid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=6cdb17533a6e02b838336bfe9791b5d57e1e2eea, not stripped
 ```
@@ -316,11 +317,11 @@ undefined8 main(void)
   }
   return 0;
 ```
-Comme on peux le voir ici
+Comme on peux le voir ici:
 ```
 pcVar1 = getenv("admin");
 ``` 
-Il check que la variable d'environnement **admin** soit vrai pour lancer /bin/bash en tant que root.
+Il check le contenu de la variable d'environnement **admin**, si elle est vrai, il execute /bin/bash en tant que root (setuid(0))
 
 Je vais donc ajouter la variable admin=1 (donc vrai)
 ```
