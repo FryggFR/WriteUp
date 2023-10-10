@@ -3,10 +3,11 @@ Here you'll find my Write Up of the boxes i rooted on Tryhackme and HackTheBox, 
 
 In this repo, i will show you how i hack a machine and try to explain how it works !
 
-*Not all write up is here.*
+Some are in French, others in English. I would try to make 2 versions per WriteUp
 
 Keep in mind i'm not a pro, i'm just a curious person who want to learn and improve. ;)
 
+*Not all write up is here.*
 *Note : All flag are hidden*
 
 # Yes my anglais is mauvais !
