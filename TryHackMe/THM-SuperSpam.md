@@ -162,6 +162,7 @@ Pre-auth hash: 17fa89923fc1fbcd941b488d0e83e82a6d8c1b4a6ddfe34fd083d45ac40a156f9
 ```
 ### 16-01-21.pcap
 Enormement de packet TCP bloquer mais c'est aussi une visite sur le même site chinois.
+
 Il y a aussi ce lien : http[:]//batit[.]aliyun[.]com/alww[.]html
 
 # Le CMS !
@@ -200,6 +201,7 @@ Nous avons l'accès au serveur.
 
 # Privesc !
 Le flag user ce trouve dans **/home/personal/Work/flag.txt**
+
 Il y a un ficheir **nextEvilPlan.txt**
 ```
 My next evil plan is to ensure that all linux filesystems are disorganised so that these 
@@ -236,6 +238,7 @@ Après plusieurs tests, il s'agit du mdp de donalddump
 Comme on peux le lire dans le fichier **nextEvilPlan.txt**, le linux est complétement désorganiser. 
 
 On va devoir chercher comment il fonctionne.
+
 J'importe LSE et l'execute, il me trouve une vulnerabilité:
 ```
 [!] cve-2021-4034 Checking for PwnKit vulnerability........................ yes!
@@ -271,6 +274,7 @@ drwx------  2 root root  4096 Oct 13 08:50 .vnc
 -rw-------  1 root root  1368 Apr  8  2021 .xsession-errors
 ```
 On y vois un dossier **.nothing** suspicieux.
+
 Le flag est bien dedans:
 ```
 drwxr-xr-x 2 root root  4096 Feb 24  2021 .
@@ -285,7 +289,7 @@ what am i?: MZWG********************4WTMTS7PU======
 
 KRUGS4ZANFZSA3TPOQQG65TFOIQSAWLPOUQG2YLZEBUGC5TFEBZWC5TFMQQHS33VOIQGEZLMN53GKZBAOBWGC3TFOQQHI2DJOMQHI2LNMUWCASDBMNVWK4RNNVQW4LBAMJ2XIICJEB3WS3DMEBRGKIDCMFRWWIDXNF2GQIDBEBRGSZ3HMVZCYIDNN5ZGKIDEMFZXIYLSMRWHSIDQNRQW4IDUN4QGOZLUEBZGSZBAN5TCA5DIMF2CA2LOMZSXE2LPOIQG64DFOJQXI2LOM4QHG6LTORSW2LBAJRUW45LYFYQA====
 ```
-C'est du base32
+Après un passage dans cyberchef, c'est du base32
 ```
 what am i?: flag{it********************N_}
 
@@ -299,6 +303,7 @@ drwxr-xr-x 2 root       root       4096 Feb 24  2021 notes
 -rw-r--r-- 1 root       root          8 Apr  8  2021 passwd
 ```
 Les 2 dossiers sont vides, mais le fichier passwd non.
+
 Je le récupère et on va voir ce qu'on en fait
 
 Après recherche, il s'agit d'un fichier password pour vnc !
