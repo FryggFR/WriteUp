@@ -53,8 +53,8 @@ Rsfv. Zwel vvm imel sumebt lqwdsfk
 Yejr. Tqenl Vsw svnt "urqsjetpwbn einyjamu" wf.
 Iz glww A ykftef.... Qjhsvbouuoexcmvwkwwatfllxughhbbcmydizwlkbsidiuscwl
 ```
-En utilisant le site suivant : https://www.boxentriq.com/
-On constate que c'est du Vigenere. Mais je n'arrive pas a decoder en utilisant ce site. 
+En utilisant le site suivant: https://www.boxentriq.com/code-breaking/cipher-identifier
+On constate que c'est du Vigenère. Mais je n'arrive pas a decoder en utilisant ce site. 
 
 J'ai trouver un autre site qui arrive a le faire : https://www.guballa.de/vigenere-solver
 ```
