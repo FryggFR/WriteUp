@@ -172,3 +172,6 @@ Last login: Tue Aug  8 19:00:06 2023 from 10.10.14.41
 root@keeper:~#
 ```
 le flag ce trouve dans **/root/root.txt**
+
+Pour une fois, celle-ci est effectivement très facile !
+Enjoy !
