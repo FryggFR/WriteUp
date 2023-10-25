@@ -46,6 +46,7 @@ En regardant l'URL de plus prêt quand on regarde un article, par exemple : http
 On peux voir ici qu'on peux essayer d'exploiter une LFI (Local File Inclusion). On va donc essayer d'afficher notre fichier secret !
 
 Voici l'url avec la LFI : http://10.10.114.38/post.php?post=secret_file_do_not_read.txt
+
 Et le résultat :
 ```
 Hi Mat, The credentials for the FTP server are below. I've set the files to be saved to /home/ftpuser/ftp/files. Will ---------- ftpuser:g************7
