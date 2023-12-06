@@ -1,4 +1,4 @@
-# Magician VM !
+# Magician !
 
 La VM traite de ImageMagik et de la CVE-2016-3714.
 On va tester tout cela ! :)
