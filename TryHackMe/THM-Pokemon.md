@@ -1,7 +1,7 @@
 # Pokemon 
 IP : 10.10.131.239
 
-Une VM facile est plutôt cool ^^ pas de compétence particulière de requise, a part pas mal de fouilles !
+Une VM facile et plutôt cool ^^ pas de compétence particulière de requise, a part pas mal de fouilles !
 # Enum
 ## NMAP:
 ```nmap
