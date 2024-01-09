@@ -114,7 +114,7 @@ After a quick analyze on the dashboard, we found Kibana is in version 6.5.4.
 
 After one quick search on google, we found one CVE about Kibana : **CVE-2019-7609**
 This CVE can lead to a RCE (Remote Code Execution).
-
+## 3. Getting the shell !
 On a shell, i run a listenner on port 4444 :
 
 `nc -lnvp 4444`
@@ -138,7 +138,7 @@ Nice, we have the reverse shell on the web server !
 
 `THM{xx_xxxx_xxxxx_xxxxxx_xxxx_xxx}`
 
-## 3. Privilege escalation !
+## 4. Privilege escalation !
 
 After quick research of config files or something usefull, i found something interesting in kiba's home.
 One folder is named **.hackmeplease**, in this folder, we have one file, its a python3 binarie.
