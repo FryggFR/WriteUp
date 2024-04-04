@@ -6,7 +6,7 @@ I rewrite this soon to be more readable lol !
 Password and flag are hidden.
 
 It took me more than 3hours to root this machine. 
-
+IN ENGLISH PLEASE !
 ## Enumeration
 First, i call my bestfriend, nmap to scan this ip:
 ```
