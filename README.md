@@ -1,5 +1,5 @@
 # Write Up
-Here you'll find my Write Up of the boxes i rooted on Tryhackme and HackTheBox, i wouldn't put root-me writeups because they are forbidden..
+Here you'll find my Write Up of the boxes i rooted on Tryhackme and HackTheBox, i wouldn't put root-me writeups because they are forbidden.
 
 In this repo, i will show you how i hack a machine and try to explain how it works !
 
