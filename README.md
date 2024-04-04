@@ -5,7 +5,7 @@ In this repo, i will show you how i hack a machine and try to explain how it wor
 
 Some are in French, others in English. I would try to make 2 versions per WriteUp
 
-Keep in mind i'm not a pro, i'm just a curious person who want to learn and improve. ;)
+Keep in mind i'm not a pro pentester, i'm just a curious person who want to learn and improve in cybersecurity. ;)
 
 *Not all write up is here.*
 
