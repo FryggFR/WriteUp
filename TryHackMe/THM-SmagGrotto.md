@@ -1,5 +1,5 @@
 # Smag
-Bon petit chall facile pour s'y remettre un peu sur THM !
+Bon petit chall facile !
 
 # Enumeration
 ## Nmap
