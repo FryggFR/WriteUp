@@ -176,6 +176,11 @@ le host est aussi en mirroir, **ssalg-gnikool** au lieux de **looking-glass**
 J'essaye de le modifier mais je n'ai pas les droits.
 
 en regardant le man de sudo, on peux définir un host avec le paramètre **-h**
+```
+-h host, --host=host
+               Run  the  command on the specified host if the security policy plugin supports remote commands. The sudoers plugin does not currently support run‐
+               ning remote commands. This may also be used in conjunction with the -l option to list a user's privileges for the remote host.
+```
 Je tente donc:
 ```
 alice@looking-glass:~$ sudo -h ssalg-gnikool /bin/bash
