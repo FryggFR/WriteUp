@@ -5,7 +5,7 @@ C'est parti
 # Enum
 On commence par l'enumération
 ## Nmap
-```bash
+```
 Starting Nmap 7.94 ( https://nmap.org ) at 2023-10-09 08:39 EDT
 Nmap scan report for 10.10.189.81
 Host is up (0.036s latency).
