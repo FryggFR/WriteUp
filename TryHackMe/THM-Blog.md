@@ -148,7 +148,7 @@ wpscan --url http://blog.thm/wp-login.php -v --api-token=MYKEY
 Il trouve quelques infos, avec l'option **--enumerate u** on retrouve les users, mais je vais vous montrer une autre methode pour obtenir ces infos sans outil !
 
 La page **http://blog.thm/wp-json/wp/v2/users** !
-```
+```json
 [{"id":1,"name":"Billy Joel","url":"","description":"","link":"http:\/\/blog.thm\/author\/bjoel\/","slug":"bjoel","avatar_urls":{"24":"http:\/\/0.gravatar.com\/avatar\/9943fa6dfe2ab4088f676ff75dc1f848?s=24&d=mm&r=g","48":"http:\/\/0.gravatar.com\/avatar\/9943fa6dfe2ab4088f676ff75dc1f848?s=48&d=mm&r=g","96":"http:\/\/0.gravatar.com\/avatar\/9943fa6dfe2ab4088f676ff75dc1f848?s=96&d=mm&r=g"},"meta":[],"_links":{"self":[{"href":"http:\/\/blog.thm\/wp-json\/wp\/v2\/users\/1"}],"collection":[{"href":"http:\/\/blog.thm\/wp-json\/wp\/v2\/users"}]}},{"id":3,"name":"Karen Wheeler","url":"","description":"","link":"http:\/\/blog.thm\/author\/kwheel\/","slug":"kwheel","avatar_urls":{"24":"http:\/\/0.gravatar.com\/avatar\/3e7bf1e5f26496543c964dc04515bb6a?s=24&d=mm&r=g","48":"http:\/\/0.gravatar.com\/avatar\/3e7bf1e5f26496543c964dc04515bb6a?s=48&d=mm&r=g","96":"http:\/\/0.gravatar.com\/avatar\/3e7bf1e5f26496543c964dc04515bb6a?s=96&d=mm&r=g"},"meta":[],"_links":{"self":[{"href":"http:\/\/blog.thm\/wp-json\/wp\/v2\/users\/3"}],"collection":[{"href":"http:\/\/blog.thm\/wp-json\/wp\/v2\/users"}]}}]
 ```
 Ici je trouve 2 comptes: 
@@ -301,7 +301,7 @@ Il s'agit d'un binaire ELF (Executable and Linkable Format), c'est le .exe de li
 checker: setuid, setgid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=6cdb17533a6e02b838336bfe9791b5d57e1e2eea, not stripped
 ```
 Je le récupère et je l'ouvre avec Ghidra afin de voir ce qu'il y a dedans:
-```
+```cpp
 undefined8 main(void)
 
 {
@@ -318,7 +318,7 @@ undefined8 main(void)
   return 0;
 ```
 Comme on peux le voir ici:
-```
+```cpp
 pcVar1 = getenv("admin");
 ``` 
 Il check le contenu de la variable d'environnement **admin**, si elle est vrai, il execute /bin/bash en tant que root (setuid(0))
