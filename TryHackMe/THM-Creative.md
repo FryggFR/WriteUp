@@ -1,5 +1,6 @@
 # Room
 Room **creative**
+
 Une VM sympathique, mais pas si facile que ca finalement je trouve.
 
 # Enumeration
@@ -56,9 +57,8 @@ Le site **http://creative.thm/** n'apporte rien d'utile.
 Par contre, **http://beta.creative.thm/** pointe vers un tester d'url. Quand on met un site, il affiche le code sinon il écris **Dead**.
 
 Je test **http://localhost** il affiche le site **http://creative.thm**
-Par contre, si je test avec **http://beta.creative.thm/** il tourne en boucle.
 
-J'ouvre un webserv local sur ma kali
+J'ouvre un serveur web local sur ma kali
 ```
 sudo python3 -m http.server 80
 ```
@@ -81,6 +81,7 @@ for port in $(seq 1 65535); do
 done
 ```
 Il trouve un port, le port 1337 répond ! Il s'agit d'une page **Directory list** avec le contenu de **/**
+
 On peux voir **/etc/passwd**
 ```
 ┌──(kali㉿kali)-[~/Challenge/TryHackMe/creative]
@@ -121,7 +122,6 @@ saad:x:1000:1000:saad:/home/saad:/bin/bash
 lxd:x:998:100::/var/snap/lxd/common/lxd:/bin/false
 mysql:x:113:118:MySQL Server,,,:/nonexistent:/bin/false
 ```
-
 # Acces !
 Après un peu de fouinage, je trouve la clé ssh de l'utilisateur **saad**
 ```
@@ -219,7 +219,9 @@ User saad may run the following commands on m4lware:
 ```
 Il peux lancer un ping en tant que root, mais ce qui nous interesse ici, c'est **env_keep+=LD_PRELOAD**
 
-Nous allons pouvoir profiter de ce pb de configuration pour devenir root.
+Plus d'information concernant cette exploit [ici](https://www.hackingarticles.in/linux-privilege-escalation-using-ld_preload/)
+
+Nous allons pouvoir en profiter pour devenir root.
 
 On va commencer par ce créer un shell:
 ```c
