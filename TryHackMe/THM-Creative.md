@@ -219,7 +219,7 @@ User saad may run the following commands on m4lware:
 ```
 Il peux lancer un ping en tant que root, mais ce qui nous interesse ici, c'est **env_keep+=LD_PRELOAD**
 
-Plus d'information concernant cette exploit [ici](https://www.hackingarticles.in/linux-privilege-escalation-using-ld_preload/)
+Plus d'information concernant cet exploit [ici](https://www.hackingarticles.in/linux-privilege-escalation-using-ld_preload/)
 
 Nous allons pouvoir en profiter pour devenir root.
 
