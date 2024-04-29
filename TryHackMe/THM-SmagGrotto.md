@@ -33,7 +33,7 @@ Starting gobuster in directory enumeration mode
 
 ```
 
-# Exploit
+## Exploit
 On trouve donc une page /mail. On va voir ce qu'elle contient.
 On retrouve un fichier .pcap, et les mails parle d'un bug pendant le download du fichier, peut-être une piste ?
 
@@ -68,7 +68,7 @@ password=c********0w
 On va donc ajouter ce domaine dans le fichier hosts et voir un peu ce qu'il y a derriere....
 
 On arrive sur un webshell une fois log.
-# Revshell
+# Exploitation
 Vu qu'on a accès a un webshell, on va s'ouvrir un rshell plus sympa.
 
 Payload :
@@ -86,7 +86,7 @@ bash: no job control in this shell
 www-data@smag:/var/www/development.smag.thm$ 
 
 ```
-# Privesc
+# Posst exploitation
 En regardant un peu sur la machine, je vois dans les taches cron la copie d'une clé ssh public
 ```
 cat /etc/crontab
@@ -144,7 +144,7 @@ jake@smag:~$ cat user.txt
 iusG********************U3j
 ```
 
-# Privesc to root !
+## Privesc to root !
 En regardant les droits avec **sudo -l**
 ```
 jake@smag:~$ sudo -l
