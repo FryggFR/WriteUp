@@ -3,7 +3,7 @@ URL : https://tryhackme.com/room/superspamr
 
 La room du jour, a base d'aliens pro windows ! 
 
-# Enum
+# Enumeration
 ## Nmap
 ```
 Starting Nmap 7.94 ( https://nmap.org ) at 2023-10-11 09:24 EDT
@@ -51,7 +51,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 63.26 seconds
 
 ```
-# FTP Port: 4019
+## FTP Port: 4019
 ```
 ┌──(kali㉿kali)-[~/Challenge/TryHackMe/SuperSpamold]
 └─$ ftp 10.10.137.113 4019  
@@ -165,7 +165,7 @@ Enormement de packet TCP bloquer mais c'est aussi une visite sur le même site c
 
 Il y a aussi ce lien : http[:]//batit[.]aliyun[.]com/alww[.]html
 
-# Le CMS !
+## Le CMS !
 Sur le blog, j'avais trouver 2 potentiels users en regardant le blog :
 ```
 Benjamin_Blogger 
@@ -180,7 +180,7 @@ Donald_Dump:s******o
 
 Il s'agit du CMS Concrete5-8.5.2, nous avons de la chance, il existe la CVE-2020-24986 permetant une RCE. Plus d'info [ici](https://hackerone.com/reports/768322)
 
-# RCE
+# Exploitation
 On va modifier les extensions autorisée sur le CMS pour y ajouter .php.
 Nous allons ensuite upload un shell php.
 
@@ -199,7 +199,7 @@ $
 ```
 Nous avons l'accès au serveur.
 
-# Privesc !
+# post exploitation !
 Le flag user ce trouve dans **/home/personal/Work/flag.txt**
 
 Il y a un ficheir **nextEvilPlan.txt**
@@ -234,7 +234,7 @@ $**************l
 ```
 
 Après plusieurs tests, il s'agit du mdp de donalddump
-# Privesc to root 
+## Privesc to root 
 Comme on peux le lire dans le fichier **nextEvilPlan.txt**, le linux est complétement désorganiser. 
 
 On va devoir chercher comment il fonctionne.
