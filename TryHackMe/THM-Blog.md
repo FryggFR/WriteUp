@@ -7,7 +7,7 @@ sudo nano /etc/hosts
 ```
 C'est parti !
 
-# Enum
+# Enumeration
 ## nmap
 Je commence par un scan nmap afin de voir ce quel est la surface d'attaque
 ```
@@ -170,7 +170,7 @@ Bingo il me trouve un mot de passe :
 ```
 Je suis donc maintenant authentifié avec un compte utilisateur sur le blog !
 
-# Revshell to the server using metasploit
+# Exploitation
 Maintenant que je suis authetifié sur le blog, je peux tenter quelques exploits. Sur [exploit-db](https://www.exploit-db.com/) je trouve l'exploit **WordPress Crop-image Shell Upload**.
 
 Je lance donc metasploit et recherche les modules dispo pour wordpress 5.0
@@ -211,7 +211,7 @@ meterpreter >
 ```
 Cela fonctionne !
 
-# Privesc !
+# Post exploitation
 On peux voir le content du fichier wp-config.php et donc avoir l'accès sur la base SQL
 ```
 // ** MySQL settings - You can get this info from your web host ** //
