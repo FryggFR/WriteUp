@@ -1,6 +1,22 @@
 # Ultratech
 Une room sympa mais très (trop ?) simple :)
-# Enum
+
+# Info
+On va vérifier la page robots.txt qui affiche bien souvent des informations utile !
+```
+Allow: *
+User-Agent: *
+Sitemap: /utech_sitemap.txt
+```
+Il y a un site map dans un fichier texte, on va le check:
+```
+/
+/index.html
+/what.html
+/partners.html
+```
+La page /partners.html ouvre un page qui demande un login.
+# Enumeration
 ## Nmap
 ```
 Starting Nmap 7.94 ( https://nmap.org ) at 2023-10-09 03:57 EDT
@@ -40,23 +56,8 @@ Progress: 220560 / 220561 (100.00%)
 Finished
 ===============================================================
 ```
-## Basic Enum
-On va vérifier la page robots.txt qui affiche bien souvent des informations utile !
-```
-Allow: *
-User-Agent: *
-Sitemap: /utech_sitemap.txt
-```
-Il y a un site map dans un fichier texte, on va le check:
-```
-/
-/index.html
-/what.html
-/partners.html
-```
-La page /partners.html ouvre un page qui demande un login.
 
-# RestAPI 
+## RestAPI 
 On vois avec Burpsuite que l'API envoi des ping vers lui-même:
 ```
 GET /ping?ip=10.10.32.31 HTTP/1.1
@@ -64,7 +65,7 @@ GET /ping?ip=10.10.32.31 HTTP/1.1
 ```
 Je vais tenter une injection de commande....
 
-# Command Injection
+## Command Injection
 Les commandes sont filtré mais je trouve comment bypass :
 
 L'url suivante :
@@ -105,10 +106,10 @@ Thanks!
 lp1
 ```
 
+# Exploit & post exploit ;)
 On peux aller sur le FTP mais celui-ci est vide.
 On peux se connecté en SSH seulement avec le compte de r00t.
 
-# Privesc !
 L'user **r00t** fait parti du groupe **docker**
 On va tenter une privesc via dockers.
 
