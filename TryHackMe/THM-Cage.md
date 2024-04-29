@@ -1,7 +1,7 @@
 # ROOM : Break the cage 
 URL : https://tryhackme.com/room/breakoutthecage1
 
-# Enum
+# Enumeration
 ## Nmap
 ```
 # Nmap 7.94 scan initiated Thu Oct 19 05:21:54 2023 as: nmap -sC -sV -p- -oN nmap.txt 10.10.111.203
@@ -68,7 +68,7 @@ In case I forget.... M**********************************************s
 ```
 Nous avons le 1er mot de passe.
 
-# Privesc to user
+# Exploitation
 On peux se connecter en SSH avec le compte de Weston et le mdp trouver plus haut.
 
 Il nous faut désormais l'accès au compte de **cage** comme on peu le voir dans le fichier **/etc/passwd** :
@@ -130,7 +130,7 @@ nc -lnvp 4444
 ```
 J'ai le shell en tant que cage au bout de quelques minutes.
 
-# Privesc to root
+# Post exploitation
 Dans le dossier **/home** de cage on trouve un fichier et un dossier:
 ```
 -rw-rw-r-- 1 cage cage  230 May 26  2020 Super_Duper_Checklist
