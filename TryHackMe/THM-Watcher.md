@@ -3,7 +3,7 @@ IP : 10.10.114.38
 
 Une room fort sympatique. Elle permet d'exploiter un panel varier d'exploit. Très cool !
 
-# Enum :
+# Enumeration :
 ## Nmap
 ```sh   
 # Nmap 7.94 scan initiated Wed Oct 25 07:35:07 2023 as: nmap -sC -sV -p- -oN nmap.txt 10.10.114.38
