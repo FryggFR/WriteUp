@@ -2,7 +2,7 @@
 IP : 10.10.131.239
 
 Une VM facile et plutôt cool ^^ pas de compétence particulière de requise, a part pas mal de fouilles !
-# Enum
+# Enumeration
 ## NMAP:
 ```nmap
 Starting Nmap 7.94 ( https://nmap.org ) at 2023-10-24 08:39 EDT
@@ -62,14 +62,15 @@ Array(10) [ "Bulbasaur", "Charmander", "Squirtle", "Snorlax", "Zapdos", "Mew", "
 9: "Magikarp"
 length: 10
 ```
-# SSH
+## SSH
 Enfaite...
 ```
 <pokemon>:<*********************>
 ```
 Ce sont des credentials pour se connecter en SSH sur le serveur..
 
-# Grass-Type
+# Exploitation
+## Grass-Type
 On arrive sur le serveur avec la session **pokemon**. 
 
 Dans le dossier **/Desktop/** ce trouve une archive **P0kEmOn.zip**
@@ -84,7 +85,7 @@ C'est de l'hexa :
 ```
 Nous avons le 1er flag.
 
-# Water-Type 
+## Water-Type 
 Dans le dossier **/var/www/html** ce trouve le fichier **water-type.txt**
 
 Il contient :
@@ -96,7 +97,7 @@ Il est encoder en caesar cipher :
 Squirtle_SqUaD{***********}
 ```
 Nous avons le second flag !
-# Fire-Type
+## Fire-Type
 Avec la commande find, on retrouve le dernier :
 ```
 pokemon@root:/var/www/html$ find / -name fire-type.txt 2</dev/null
@@ -113,7 +114,7 @@ P0k3m0n{***********}
 ```
 Et de 3 ! Plus que le root ;)
 
-# Privesc to root !
+# Post exploit
 Après avoir fait tout les tests possible (SUID/GUID, crontab, linpeas, lse, etc..) je trouve toujours rien de bien probant. Je continue mes fouilles et je tombe la dessus :
 ```
 pokemon@root:~/Videos/Gotta/Catch/Them/ALL!$ cat Could_this_be_what_Im_looking_for\?.cplusplus 
