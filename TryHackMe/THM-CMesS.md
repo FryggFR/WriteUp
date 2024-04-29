@@ -3,7 +3,7 @@ De l'exploit, de l'énumération, de la recherche. Une bonne room sympatoche !
 
 IP : 10.10.41.234
 
-# Enum
+# Enumeration
 ## Nmap:
 ```nmap
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2023-11-10 09:20 EST
@@ -79,7 +79,7 @@ Compte :
 andre@cmess.thm
 **************
 ```
-# RCE
+# Exploitation
 La version de Gila est la 1.10.9, celle-ci est vulnérable et une RCE est exploitable. 
 
 L'exploit ce trouve ici: https://www.exploit-db.com/exploits/51569
@@ -115,7 +115,7 @@ bash: no job control in this shell
 www-data@cmess:/var/www/html/tmp$
 ```
 
-# Privesc
+# Post exploitation
 On farfouillant un peu on retrouve dans le dossier /opt un fichier intéressant
 ```
 www-data@cmess:/$ cd /opt
@@ -139,7 +139,7 @@ On trouve le 1er flag dans le home de andre :
 andre@cmess:~$ cat user.txt 
 thm{c52**************************}
 ```
-# Privesc to root !
+## Privesc to root !
 J'importe LSE *(Linux Smart Enumeration)* et l'execute. Il trouve quelque chose d'intéressant dans les taches cron :
 ```
 [!] ret060 Can we write to executable paths present in cron jobs........... yes!
