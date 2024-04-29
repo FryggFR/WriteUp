@@ -3,7 +3,7 @@
 La VM traite de ImageMagik et de la CVE-2016-3714.
 On va tester tout cela ! :)
 
-# Enum
+# Enumeration
 ## Nmap
 ```
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2023-12-05 08:11 EST
@@ -23,7 +23,7 @@ URL : http://10.10.56.0:8081/
 
 Il s'agit d'un site qui convertie les images .png en .jpg.
 
-# Exploit
+# Exploitation
 Il parle de la **CVE-2016-3714** qui est une CVE concernant ImageMagik et permet d'executer des commandes via une fausse image (ou une vrai piéger :))
 
 Plus d'info et exploit [ici](https://www.exploit-db.com/exploits/39767)
@@ -58,7 +58,7 @@ sh: cannot set terminal process group (986): Inappropriate ioctl for device
 sh: no job control in this shell
 sh-4.4$ 
 ```
-# Privesc to root !
+# Post exploitation
 Dans le dossier /home de l'user **magician** on retrouve ce fichier:
 ```
 spring-boot-magician-backend-0.0.1-SNAPSHOT.jar
