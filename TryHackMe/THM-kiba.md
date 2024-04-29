@@ -11,7 +11,7 @@ In this write up, you can see :
 This is my first write up, it may be modified !
 This challenge is fairly easy, so this writeup won't take long.
 
-## 1. Enumeration
+# 1. Enumeration
 
 First of all, i have to gather somes informations about this boxe.
 I run nmap scan to get open port, version etc.
@@ -108,13 +108,12 @@ Nmap done: 1 IP address (1 host up) scanned in 29.40 seconds
 WebServer is empty, just the default apache page. Lets look to the port 5601, who is Kibana.
 
 Kibana is a data visualization dashboard for Elasticsearch.
-
-## 2. Research of exploit !
 After a quick analyze on the dashboard, we found Kibana is in version 6.5.4.
 
 After one quick search on google, we found one CVE about Kibana : **CVE-2019-7609**
 This CVE can lead to a RCE (Remote Code Execution).
-## 3. Getting the shell !
+
+# Exploitation
 On a shell, i run a listenner on port 4444 :
 
 `nc -lnvp 4444`
@@ -138,7 +137,7 @@ Nice, we have the reverse shell on the web server !
 
 `THM{xx_xxxx_xxxxx_xxxxxx_xxxx_xxx}`
 
-## 4. Privilege escalation !
+## Root
 
 After quick research of config files or something usefull, i found something interesting in kiba's home.
 One folder is named **.hackmeplease**, in this folder, we have one file, its a python3 binarie.
