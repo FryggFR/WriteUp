@@ -146,6 +146,7 @@ Administrator
 whatever1
 ```
 This account do not work with the login page nor the admin login page...
+
 We must continue our research in MySQL...
 # Post exploit
 
