@@ -2,7 +2,7 @@
 https://tryhackme.com/r/room/lookingglass
 
 Un writeup fait a la va-vite comme d'habitude, mais promis je les referais plus propre !
-# Enum
+# Enumeration
 ## NMAP
 ```
 Le scan nmap montre le port 22, et ensuite une range de port de 9000 a 13999. Donc beaucoup de port...
@@ -32,7 +32,7 @@ done
 Ici, j'ai mis une sequence de 12855 a 13999 car j'avais déjà test quelques ports et j'avais donc déjà la range qu'il me fallais pour trouver le juste millieu.
 
 Le port 12869 me répond autre chose que Lower ou Higher!
-# Research
+## Le bon port
 ```
 Test sur le port 12869
 Warning: Permanently added '[10.10.24.153]:12869' (RSA) to the list of known hosts.
@@ -88,7 +88,7 @@ Compte SSH:
 ```
 jabberwock:Mostly[...REDACTED...]hecked
 ```
-# SSH
+# Exploitation
 1er flag
 ```
 jabberwock@looking-glass:~$ cat user.txt 
@@ -96,7 +96,8 @@ jabberwock@looking-glass:~$ cat user.txt
 ```
 Le flag est vu depuis un mirroir, suffit de le reverse pour avoir le flag.
 
-# Privesc to tweedledee
+# Post exploitation
+## Privesc to tweedledee
 Dans le dossier /home de jabberwock on retrouve un script, un flag et un poeme.
 Le compte jabberwork peux exectuer **/sbin/reboot** en tant que root sans passwd.
 
@@ -107,14 +108,14 @@ nc -lnvp 4444
 ```
 J'ai revshell en tant que tweedledum.
 
-# Privesc to tweedledum
+## Privesc to tweedledum
 En regardant les droits sur sudo avec **sudo -l** on vois qu'on peux executer **/bin/bash** en tant que **tweedledum**
 ```
 sudo -u tweedledum /bin/bash
 ```
 Nous voila en tant que tweedledum
 
-# Privesc to humptydumpty
+## Privesc to humptydumpty
 On retrouve ces hash dans un fichier :
 ```
 dcfff5eb40423f055a[...REDACTED...]9816868f5766b4088b9e9906961b94
@@ -133,7 +134,7 @@ the password is zy[...REDACTED...]lk
 ```
 C'est le mot de passe du compte de humptydumpty
 
-# Privesc to Alice !
+## Privesc to Alice !
 On ne peux rien voir ni écrire dans le dossier de alice, on a un accès refusé.
 
 Je test de lire le fichier .bashrc, rien ne s'affiche, pour le coup c'est une bonne chose car je ne suis pas bloquer pour lire.
@@ -167,7 +168,7 @@ k6ywCnCtTz2/sNEgNcx9/iZW+yVEm/4s9eonVimF+u19HJFOPJsAYxx0
 ```
 On peu se connecter en SSH en tant que Alice
 
-# Privesc to root
+## Privesc to root
 Via linpeas, je trouve que le fichier **/etc/sudoers.d/alice** est lisible
 ```
 alice ssalg-gnikool = (root) NOPASSWD: /bin/bash
