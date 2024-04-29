@@ -1,9 +1,7 @@
 # Room : Internal
-IP :
+Je finirais le write-up plus tard...
 
-je finirais le write-up plus tard...
-
-# Enum / Reconnaissance
+# Enumeration
 ## Nmap
 ```
 Starting Nmap 7.94 ( https://nmap.org ) at 2023-09-04 08:59 EDT
@@ -48,7 +46,7 @@ Starting gobuster in directory enumeration mode
 En testant la page wp-admin avec un compte admin/admin, j'ai l'identifiant : admin
 Celui-ci me retourne cette erreur : 
 **Error: The password you entered for the username admin is incorrect. Lost your password?**
-Il conforme que c'est bien **admin**
+Il confirme que c'est bien **admin**
 
 ## WPScan
 ```
@@ -87,7 +85,7 @@ Il conforme que c'est bien **admin**
 
 WordPress version 5.4.2
 
-# Exploit Wordpress
+# Exploitation
 Je trouve le compte admin du wordpress après l'avoir bruteforce
 
 [+] Performing password attack on Wp Login against 1 user/s
@@ -128,7 +126,7 @@ msf6 exploit(multi/handler) > run
 meterpreter >
 ```
 
-# Privesc to user !
+# Post exploit
 Sur le serveur on trouve un fichier **wp-save.txt** dans le dossier **/opt** qui semble interessant.
 
 ```
