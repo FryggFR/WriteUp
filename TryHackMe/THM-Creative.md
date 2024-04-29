@@ -3,13 +3,14 @@ Room **creative**
 
 Une VM sympathique, mais pas si facile que ca finalement je trouve.
 
+# Information Gathering
+On trouve un blog plutôt sympa mais sans trop d'information exploitable.
+
 # Enumeration
 Je vous montre ici que ce qui à apporter une réponse utile.
 
 ## Nmap:
 ```
-WARNING: Running Nmap setuid, as you are doing, is a major security risk.
-
 # Nmap 7.94SVN scan initiated Thu Apr 25 06:09:01 2024 as: nmap -sC -sV -p- -o nmap.txt 10.10.195.49
 Nmap scan report for creative.thm (10.10.195.49)
 Host is up (0.037s latency).
@@ -51,10 +52,8 @@ Filtered Requests: 4988
 Requests/sec.: 272.2931
 ```
 
-# Searching
-Le site **http://creative.thm/** n'apporte rien d'utile.
-
-Par contre, **http://beta.creative.thm/** pointe vers un tester d'url. Quand on met un site, il affiche le code sinon il écris **Dead**.
+# Exploitation
+**http://beta.creative.thm/** pointe vers un tester d'url. Quand on met un site, il affiche le code sinon il écris **Dead**.
 
 Je test **http://localhost** il affiche le site **http://creative.thm**
 
@@ -122,7 +121,7 @@ saad:x:1000:1000:saad:/home/saad:/bin/bash
 lxd:x:998:100::/var/snap/lxd/common/lxd:/bin/false
 mysql:x:113:118:MySQL Server,,,:/nonexistent:/bin/false
 ```
-# Acces !
+# Post-exploitation !
 Après un peu de fouinage, je trouve la clé ssh de l'utilisateur **saad**
 ```
 ┌──(kali㉿kali)-[~/Challenge/TryHackMe/creative]
@@ -202,7 +201,7 @@ saad@m4lware:~$
 ```
 J'en profile pour prendre le 1er flag dans **user.txt**
 
-# Privesc to root !
+## Privesc to root !
 Dans l'historique, on retrouve le mot de passe de **saad**
 ```
 echo "saad:[...REDACTED...]" > creds.txt
