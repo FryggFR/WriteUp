@@ -8,7 +8,7 @@ Password and flag are hidden.
 It took me more than 3hours to root this machine. 
 IN ENGLISH PLEASE !
 ## Enumeration
-First, i call my bestfriend, nmap to scan this ip:
+First, i need to scan the machine using nmap:
 ```
 Starting Nmap 7.94 ( https://nmap.org ) at 2023-08-24 06:06 EDT
 Nmap scan report for 10.10.250.118
@@ -60,7 +60,7 @@ We have a webserver, samba, and a POP3/IMAP server
 
 We have to enumerate theses SMB share, they have generaly some juicy files.
 
-### SMB Enumeration
+## SMB
 I use smbclient to enumerate a smb server:
 ```sh
 smbclient -L 10.10.250.118 -U " "%" "
@@ -123,8 +123,8 @@ All file is empty except log1.txt
 
 log1.txt is wordlist with passwords. That means on things : we have to bruteforce miles account !
 
-### Web enum
-I use gobuster to enumerate webserver
+## Webserver
+I use gobuster to bruteforce folder on the webserver
 ```sh
 gobuster dir -u http://10.10.250.118 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 ```
@@ -157,7 +157,6 @@ Finished
 ```
 Here the POP/IMAP server we found previously with nmap, its squirrel mail server.
 
-## Time to attack !
 We have an id (milesdyson) and a list of passwords (log1.txt). We can try to bruteforce this webmail server.
 
 To do this, i use hashcat:
@@ -286,8 +285,7 @@ Result:
 Field configuration: 
 7ce***********************
 ```
-### We need a reverse shell now !
-
+# Exploitation
 I openned et netcat listener on port 4444
 ```sh
 nc -lnvp 4444
@@ -302,7 +300,7 @@ We now have the reverse shell on the server as www-data !
 
 I look at mysql db and dumped cu_users db, i found admin account of CUPPA, but its useless. Dont waste your time here ;).
 
-## Privesc !
+# Post exploitation
 
 I download linpeas on the server to check possible privesc
 
