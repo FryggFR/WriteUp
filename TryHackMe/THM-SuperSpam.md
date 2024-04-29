@@ -3,6 +3,8 @@ URL : https://tryhackme.com/room/superspamr
 
 La room du jour, a base d'aliens pro windows ! 
 
+**ATTENTION**: *Je n'avais pas fait attention mais la VM est plus vielle que l'exploit que j'ai utiliser pour devenir root, donc ce write up n'est pas très juste.*
+
 # Enumeration
 ## Nmap
 ```
@@ -234,6 +236,7 @@ $**************l
 ```
 
 Après plusieurs tests, il s'agit du mdp de donalddump
+
 ## Privesc to root 
 Comme on peux le lire dans le fichier **nextEvilPlan.txt**, le linux est complétement désorganiser. 
 
