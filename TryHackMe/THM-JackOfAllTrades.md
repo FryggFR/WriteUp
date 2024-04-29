@@ -1,7 +1,7 @@
 # THM: Jack of all trade 
 A réécrire mais bon l'important est là ;)
 
-# Enum
+# Enumeration
 ## Nmap
 ```
 Starting Nmap 7.94 ( https://nmap.org ) at 2023-09-27 08:29 EDT
@@ -52,7 +52,7 @@ Progress: 4614 / 4615 (99.98%)
 Finished
 ===============================================================
 ```
-# Analyse 
+## Analyse 
 Firefox refuse donc d'ouvrir la page, on va l'afficher avec curl :
 ```
 ┌──(kali㉿kali)-[~]
@@ -126,7 +126,7 @@ Je vois encore ce qui ressemble a du base64 mais celui-ci ne montre rien de bien
 
 Je test les identifiants **Jack** et le mot de passe **u*******q**, mais cela ne fait rien.
 
-# Stego !
+## Stego !
 Sur la page d'acceuil, je re-regarde le code source et je constate qu'une des images se nomme "stego" ce qui fait fortement penser a la stegonographie. (L'art de cacher des informations dans des images)
 ```
 http://10.10.187.114:22/assets/stego.jpg
@@ -182,7 +182,7 @@ Password: T********Y
 ```
 Enfin !! Je vais test ca sur la page Recovery.
 
-# Recovery !
+## Recovery !
 Cela fonctionne et redirigie vers **http://10.10.187.114:22/nnx****OV/index.php** qui nous affiche :
 ```
 GET me a 'cmd' and I'll run it for you Future-Jack. 
@@ -197,7 +197,7 @@ GET me a 'cmd' and I'll run it for you Future-Jack. root:x:0:0:root:/root:/bin/b
 ```
 Je vais donc pouvoir tester d'avoir un reverse shell.
 
-# Le revshell tant attendu 
+# Exploitation
 En envoyant le bon payload, j'arrive à avoir un revshell :
 
 1) j'ouvre un listener
@@ -221,7 +221,7 @@ script /dev/null -c bash
 ```
 
 Maintenant, c'est parti pour le privesc !
-# Privesc to user!
+# Post exploitation
 Actuellement nous sommes avec l'utilisateur **www-data*** mais on veux Jack !
 
 Dans /home il y a un fichier **jacks_password_list**
@@ -305,7 +305,7 @@ Et on trouve le 1er flag en plein milieu d'une recette de soupe de pinguin
 securi-tay2020_{********************************}
 ```
 
-# Privesc to root!
+## Privesc to root!
 On regarde ce que peux faire jack avec la commande **sudo -l**
 ```
 jack@jack-of-all-trades:/tmp$ sudo -l
