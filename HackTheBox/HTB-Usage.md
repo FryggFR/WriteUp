@@ -344,3 +344,10 @@ H2sfTWZeFDLGmqMhrqDdAAAACnJvb3RAdXNhZ2UBAgM= : No more files
 -----END OPENSSH PRIVATE KEY----- : No more files
 ----------------
 ```
+And you can get SSH acces with this key :
+```
+ssh root@usage.htb -i id_rsa-root
+[...]
+root@usage:~# cat /root/root.txt
+cbfa2fdae1dacca017f8b7cc7acf886a
+```
