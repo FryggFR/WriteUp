@@ -161,7 +161,7 @@ laravel/sanctum 	^3.2
 laravel/tinker 	^2.8
 symfony/filesystem 	^6.3
 ```
-After a quick google search, we found an [Arbitrary Code Execution](https://flyd.uk/post/cve-2023-24249/)
+After a quick google search, we found an [File  Upload exploit](https://flyd.uk/post/cve-2023-24249/)
 
 Now, we have the shell !
 
