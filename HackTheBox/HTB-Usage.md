@@ -297,7 +297,8 @@ As we can see here :
 ```
 /usr/bin/7za a /var/backups/project.zip -tzip -snl -mmt -- *
 ```
-It use 7zip to backup some file.
+It use 7zip to backup some file. Maybe we can use wildcard tricks.
+
 As we can read [here](https://book.hacktricks.xyz/linux-hardening/privilege-escalation/wildcards-spare-tricks?source=post_page-----f1c2793eeb7e--------------------------------) :
 ```
 In 7z even using -- before * (note that -- means that the following input cannot treated as parameters, so just file paths in this case) you can cause an arbitrary error to read a file, so if a command like the following one is being executed by root
