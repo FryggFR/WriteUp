@@ -269,7 +269,7 @@ su xander
 Password: 3nc0d3d_pa$$w0rd
 xander@usage:/home/dash$ 
 ```
-Looking at 127.0.0.1:2812, it just monit acces page.
+Looking at 127.0.0.1:2812, it just monit page but we can't log in using theses cred..
 
 Look at sudo privilege :
 ```
