@@ -3,7 +3,7 @@ Usage from HTB :)
 I want to write  this writeup in english this time :)
 
 # Information gathering
-This is a website, with login, register and admin page.
+This is a website, with login, register and admin page. It also have a reset password page.
 
 As we can see in cookie, it using laravel. And that all.
 # Enumeration
