@@ -370,6 +370,8 @@ User rick may run the following commands on Hijack:
 ```
 J'ai peut-être trouver un moyen avec LD_LIBRARY_PATH.
 
+*LD_LIBRARY_PATH est une variable d'environnement prédéfinit sur les systèmes Linux/Unix qui indique au linker où trouver les librairies partagées*
+
 Avec la commande **ldd**, on va regarder les libs utilisé par apache2:
 ```
 rick@Hijack:~$ ldd /usr/sbin/apache2
@@ -422,3 +424,10 @@ root@Hijack:/tmp# cat /root/root.txt
 THM{[...REDACTED...]}
 root@Hijack:/tmp# 
 ```
+Ce qu'on à fait concrétement:
+
+1) On créer un shell avec le nom d'une librairie utilisé par apache2
+2) On execute apache2 avec en précisant le chemin de notre nouvelle librairie: **sudo LD_LIBRARY_PATH=/notre/dossier/ou/ce/trouve/le/shell apache2**
+3) Apache2 s'execute et charge ses librairies
+4) Il va charger **libdl.so.2** qui est notre shell et donc l'executer
+5) apache2 est en erreur, mais nous avons notre shell.
