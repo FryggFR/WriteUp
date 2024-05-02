@@ -1,4 +1,7 @@
 # CHALL : Hijack
+Bonjour,
+
+Aujourd'hui on va faire un petit challenge sur TryHackMe !
 
 # Information Gathering
 IP : 10.10.211.179
