@@ -209,7 +209,7 @@ Donc le cookie PHPSESSID sera comme ceci :
 ```
 PHPSESSID=admin:PASSWORD_EN_MD5
 ```
-Il y a un résultat :
+Et on trouve la page admin grace a la taille de la réponse qui est bien plus grosse que d'habitude :
 ```
 GET /administration.php HTTP/1.1
 Host: 10.10.211.179
