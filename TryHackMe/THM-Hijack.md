@@ -318,7 +318,7 @@ prepare("SELECT * FROM users WHERE username = ? AND password = ?");
   $stmt->close();
 }
 
-if ( $password_hash !== 'd6573ed739ae7fdfb3ced197d94820a5' || $username !== 'admin') {
+if ( $password_hash !== 'd65[...REDACTED...]0a5' || $username !== 'admin') {
     echo "Access denied, only the admin can access this page.";
     exit();
 }
