@@ -271,7 +271,7 @@ zeamkish@ip-10-10-48-246:~$ cat flag.txt
 THM{[...]}
 zeamkish@ip-10-10-48-246:~$ 
 ```
-# Privesc to root
+## Privesc to root
 Je trouve ces bin avec suid :
 ```
 -rwsr-xr-x 1 root root 313K Apr 10  2020 /usr/bin/nano
