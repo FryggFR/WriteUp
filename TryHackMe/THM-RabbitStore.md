@@ -2,7 +2,7 @@
 RabbitStore
 
 # Infos
-Un VM medium, mais je l'ai trouve hard perso. Enormement de recherche pour arriver à mes fins !
+Un VM medium, mais je l'ai trouve hard perso. Enormement de recherche pour arriver à mes fins, mais très intéressante !
 
 # Enumeration
 Quand je vais sur l'ip, ca force l'utilisation du DNS **cloudsite.thm**, on va donc l'ajouter dans le fichier **/etc/hosts** 
