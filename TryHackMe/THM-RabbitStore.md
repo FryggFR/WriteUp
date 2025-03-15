@@ -5,7 +5,7 @@ RabbitStore
 Un VM medium, mais je l'ai trouve hard perso. Enormement de recherche pour arriver à mes fins !
 
 # Enumeration
-Quand je vais sur l'ip, ca force l'utilisation du dns **cloudsite.thm**, on va donc l'ajouter dans le fichier **/etc/hosts** 
+Quand je vais sur l'ip, ca force l'utilisation du DNS **cloudsite.thm**, on va donc l'ajouter dans le fichier **/etc/hosts** 
 ```
 10.10.119.93    cloudsite.thm
 ```
@@ -31,7 +31,7 @@ Filtered Requests: 4988
 Requests/sec.: 271.2576
 
 ```
-Visiblement, pas d'autre sous domaine (du moins, pas présente dans la liste que j'ai utilisé).
+Visiblement, pas d'autre sous domaine (du moins, pas présent dans la liste que j'ai pris).
 
 ## NMAP
 ```
@@ -61,21 +61,21 @@ Nmap done: 1 IP address (1 host up) scanned in 164.40 seconds
 - 22 SSH
 - 80 HTTP
 - 4369 EPMD (Erlang)
-- 25672 ?
+- 25672 node Rabbit
 
 # Recherches et exploitation
 On peux créer un compte, je test mais j'ai ce message :
 ```
 Sorry, this service is only for internal users working within the organization and our clients. If you are one of our clients, please ask the administrator to activate your subscription.
 ```
-On peux aussi envoyer un message via le formulaire de contact mais cela semble inactif.
+On peux aussi envoyer un message via le formulaire de contact mais c'est inactif.
 
 Sur le site on vois ces 2 emails :
 ``` 
 info@smarteyeapps.com
 sales@smarteyeapps.com
 ```
-Je test de créer un compte avec le domaine **@smarteyeapps.com** mais maintenant, j'ai cela dis que j'ai un username / password invalide
+Je test de créer un compte avec le domaine **@smarteyeapps.com** mais maintenant, j'ai une erreur => username / password invalide
 
 Il y a 2 potentiels users : 
 ```
@@ -129,7 +129,7 @@ Connection: Keep-Alive
 {"message":"User registered successfully"}
 ```
 J'ai accès au site, il permet l'envoi d'un fichier.
-Je vais test d'envoyé un shell php, pour cela j'utilise le php-reverse-shell de pentestmonkey.
+Je vais test d'envoyer un shell php, pour cela j'utilise le php-reverse-shell de pentestmonkey.
 
 Il l'envoi bien :
 ```
@@ -145,7 +145,7 @@ Connection: Keep-Alive
 
 {"message":"Image uploaded successfully","path":"/api/uploads/64ecfb15-711c-486b-afc5-47e0045c602d"}
 ```
-Mais cela télécharge le shell et ne l'execute pas.
+Mais ca télécharge le shell et ne l'execute pas.
 
 On peux aussi upload via une URL :
 ```
@@ -179,7 +179,7 @@ Connection: Keep-Alive
 
 {"message":"File stored from URL successfully","path":"/api/uploads/3436b178-0437-4416-9e04-fc73eab848ad"}
 ```
-Et quand je fait un GET sur l'URL j'ai bien le content de mon fichier :
+Et quand je fait un GET sur l'URL j'ai bien le contenu de mon fichier :
 ```
 GET /api/uploads/3436b178-0437-4416-9e04-fc73eab848ad HTTP/1.1
 Host: storage.cloudsite.thm
@@ -192,7 +192,7 @@ Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJsYWJsYUB0ZXN0LmN
 Upgrade-Insecure-Requests: 1
 Priority: u=0, i
 ```
-Oui je suis beaucoup d'inspiration ;)
+Oui j'ai beaucoup d'inspiration ;)
 ```
 HTTP/1.1 200 OK
 Date: Fri, 14 Mar 2025 16:44:14 GMT
@@ -305,7 +305,7 @@ Connection: Keep-Alive
 <address>Apache/2.4.52 (Ubuntu) Server at cloudsite.thm Port 80</address>
 </body></html>
 ```
-Y'a une réponse, bon c'est une erreur 404 mais il y a une réponse. Cependant il y a quand même des choses utiles:
+Y'a une réponse, bon c'est une erreur 404 mais il y a une réponse. Cependant il y a quand même un truc utile dont je n'avais pas fait attention avant:
 ```
 X-Powered-By: Express
 ```
