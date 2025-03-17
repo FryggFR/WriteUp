@@ -525,7 +525,7 @@ La SSTI ce trouve ici :
 ```
 </html>'''.format(username)
 ```
-La variable python **username** est inséré dans le template HTML, nous pouvons donc injecter du code dans la variable qui sera executer. 
+La variable **username** est inséré dans le template HTML, nous pouvons donc injecter du code dans cette variable. Donc quand j'injecte **{{7*7}}** il l'execute et répond **49**.
 
 # Privesc to Root :)
 J'ai un peu tout check, puis je me suis rappeler du résultat de nmap
